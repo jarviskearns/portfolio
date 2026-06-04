@@ -102,46 +102,36 @@
       object-fit: contain;
     }
 
-    .ascii-art {
+    .organic-ascii {
+      width: min(80vw, 980px);
+      max-width: 100%;
       margin: 10vh 0 0 0;
+      overflow: hidden;
+      background: transparent;
       color: var(--text);
       font-family: var(--font);
       font-size: clamp(9px, 1.1vw, 15px);
       line-height: 1.05;
       letter-spacing: 0.015em;
+    }
+
+    .ascii-layer {
+      margin: 0;
+      font: inherit;
+      line-height: inherit;
+      letter-spacing: inherit;
       white-space: pre;
       user-select: text;
     }
 
-    .ascii-art-mobile {
-      display: none;
-    }
-
-    .ascii-art-desktop {
-      display: block;
-    }
-
-    .mobile-link-panel {
-      display: none;
-    }
-
-    .mobile-link-panel a {
-      color: var(--link);
-      text-decoration: none;
-    }
-
-    .mobile-link-panel a:hover,
-    .mobile-link-panel a:focus-visible {
-      background: var(--hover-background);
-      color: var(--hover-text);
-      outline: none;
-    }
-
-
-    .ascii-art a {
+    .ascii-layer a {
       color: var(--link);
       background: transparent;
+      font: inherit;
+      line-height: inherit;
+      letter-spacing: inherit;
       text-decoration: none;
+      user-select: auto;
       border: 0;
     }
 
@@ -149,18 +139,63 @@
       letter-spacing: 0.08em;
     }
 
-    .ascii-art a:hover,
-    .ascii-art a:focus-visible,
-    .ascii-art a.is-active {
+    .ascii-layer a:hover,
+    .ascii-layer a:focus-visible,
+    .ascii-layer a.is-active {
       background: var(--hover-background);
       color: var(--hover-text);
       outline: none;
       text-decoration: none;
     }
 
-    .ascii-art .char-highlight {
+    .ascii-layer .char-highlight {
       background: #ffe600;
-      color: #000;
+      color: #000000;
+    }
+
+    .ascii-fallback {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.35em;
+      width: 100%;
+      padding-top: 0.5em;
+      font: inherit;
+      line-height: 1.05;
+      letter-spacing: 0.03em;
+    }
+
+    .ascii-fallback .fallback-label {
+      color: var(--text);
+      font-size: clamp(14px, 2vw, 24px);
+      line-height: 1;
+      margin-bottom: 0.2em;
+    }
+
+    .ascii-fallback .fallback-project {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.05em;
+      margin: 0 0 0.45em 0;
+    }
+
+    .ascii-fallback a {
+      color: var(--link);
+      background: transparent;
+      font: inherit;
+      font-size: clamp(17px, 2.4vw, 31px);
+      line-height: 1.03;
+      text-decoration: none;
+    }
+
+    .ascii-fallback a:hover,
+    .ascii-fallback a:focus-visible,
+    .ascii-fallback a.is-active {
+      background: var(--hover-background);
+      color: var(--hover-text);
+      outline: none;
+      text-decoration: none;
     }
 
     @media (max-width: 900px) {
@@ -171,7 +206,7 @@
       main {
         width: 100%;
         min-height: 100svh;
-        padding: 154px var(--mobile-side-padding) 32px var(--mobile-side-padding);
+        padding: 178px var(--mobile-side-padding) 32px var(--mobile-side-padding);
         overflow-x: hidden;
       }
 
@@ -202,13 +237,12 @@
         bottom: auto;
         z-index: 2;
         width: 100%;
-        height: 126px;
-        padding: 12px 10px 10px 10px;
+        height: 140px;
+        padding: 18px 12px 12px 12px;
         overflow-x: auto;
         overflow-y: hidden;
         background: var(--background);
         touch-action: pan-x;
-        border-bottom: 1px solid var(--text);
       }
 
       .work-track,
@@ -227,52 +261,12 @@
         object-fit: contain;
       }
 
-      .mobile-link-panel {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
+      .organic-ascii {
         width: 100%;
-        margin: 0;
-      }
-
-      .mobile-link-panel a {
-        display: block;
-        width: 100%;
-        min-height: 44px;
-        padding: 10px 0;
-        font-size: clamp(16px, 4.8vw, 22px);
-        line-height: 1.15;
-        overflow-wrap: anywhere;
-      }
-
-      .ascii-art {
-        display: inline-block;
-        max-width: 100%;
-        margin-top: 28px;
-        font-size: clamp(5.6px, 1.55vw, 7.8px);
+        margin-top: 8vh;
+        font-size: clamp(8.6px, 3.35vw, 14px);
         line-height: 1.02;
-        letter-spacing: 0;
-      }
-
-      .ascii-art-desktop {
-        display: none;
-      }
-
-      .ascii-art-mobile {
-        display: block;
-        width: 100%;
-        max-width: 100%;
-        font-size: clamp(5.8px, 1.85vw, 8.5px);
-        line-height: 1.03;
-        letter-spacing: 0.01em;
-        overflow: hidden;
-        margin-left: 0;
-        margin-right: 0;
-        pointer-events: none;
-      }
-
-      .ascii-art-mobile a {
-        pointer-events: auto;
+        letter-spacing: 0.045em;
       }
 
 
@@ -281,7 +275,7 @@
 
     @media (max-width: 520px) {
       main {
-        padding: 136px var(--mobile-side-padding) 28px var(--mobile-side-padding);
+        padding: 158px var(--mobile-side-padding) 28px var(--mobile-side-padding);
       }
 
       .work-scroll {
@@ -303,24 +297,16 @@
         font-size: clamp(18px, 8.7vw, 32px);
       }
 
-      .ascii-art {
-        margin-top: 24px;
-        font-size: clamp(5.2px, 1.65vw, 6.9px);
-        line-height: 1.01;
-      }
-
-      .mobile-link-panel a {
-        font-size: clamp(16px, 5.2vw, 20px);
+      .organic-ascii {
+        margin-top: 6vh;
+        font-size: clamp(4.8px, 1.33vw, 6.7px);
+        line-height: 1;
       }
     }
 
     @media (max-width: 380px) {
-      .ascii-art {
-        font-size: 5px;
-      }
-
-      .mobile-link-panel a {
-        font-size: 16px;
+      .organic-ascii {
+        font-size: 4.55px;
       }
     }
   </style>
@@ -429,106 +415,53 @@
       </div>
     </aside>
     <h1 class="site-banner"></h1>
-    <nav aria-label="Mobile site links" class="mobile-link-panel">
-      <a href="balance-of-power-videogame-propaganda-1980-2000.html">Balance of Power: Videogame Propaganda 1980-2000</a>
-      <a href="musica-obscura-issue-001.html">Musica Obscura issue 001</a>
-      <a href="semantic-web-collager.html">semantic web collager</a>
-      <a href="cgis-commons-geographic-image-search.html">CGIS commons geographic image-search</a>
-      <a href="assorted-video-audio.html">assorted video &amp; audio</a>
-      <a href="about.html">about</a>
-      <a href="mailto:hello@example.com">contact</a>
+    <nav class="organic-ascii" id="organicAscii" aria-label="Main links">
+      <!-- ascii-generator-source: images/shape.png only; fallback: simple link rows -->
+      <div class="ascii-fallback" data-fallback>
+        <span class="fallback-label">Work:</span>
+
+        <div class="fallback-project">
+          <a href="https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/" data-project="balance"
+            aria-label="Balance of Power: Videogame Propaganda 1980-2000">Balance of Power:</a>
+          <a href="https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/" data-project="balance"
+            aria-label="Balance of Power: Videogame Propaganda 1980-2000">Videogame Propaganda 1980-2000</a>
+        </div>
+
+        <div class="fallback-project">
+          <a href="https://jarviskearns.github.io/musica-obscura/" data-project="musica"
+            aria-label="Musica Obscura issue 001">Musica
+            Obscura</a>
+          <a href="https://jarviskearns.github.io/musica-obscura/" data-project="musica"
+            aria-label="Musica Obscura issue 001">issue
+            001</a>
+        </div>
+
+        <div class="fallback-project">
+          <a href="semantic-web-collager.html" data-project="semantic" aria-label="semantic web collager">semantic</a>
+          <a href="semantic-web-collager.html" data-project="semantic" aria-label="semantic web collager">web
+            collager</a>
+        </div>
+
+        <div class="fallback-project">
+          <a href="cgis-commons-geographic-image-search.html" data-project="cgis"
+            aria-label="CGIS (commons-geographic-image-search)">CGIS</a>
+          <a href="cgis-commons-geographic-image-search.html" data-project="cgis"
+            aria-label="CGIS (commons-geographic-image-search)">commons</a>
+          <a href="cgis-commons-geographic-image-search.html" data-project="cgis"
+            aria-label="CGIS (commons-geographic-image-search)">geographic</a>
+          <a href="cgis-commons-geographic-image-search.html" data-project="cgis"
+            aria-label="CGIS (commons-geographic-image-search)">image-search</a>
+        </div>
+
+        <div class="fallback-project">
+          <a href="assorted-video-audio.html" data-project="media" aria-label="assorted video and audio">assorted</a>
+          <a href="assorted-video-audio.html" data-project="media" aria-label="assorted video and audio">video &amp;
+            audio</a>
+        </div>
+
+        <a href="mailto:hello@example.com" class="utility-link">contact</a>
+      </div>
     </nav>
-    <pre class="ascii-art ascii-art-desktop">        Work:                  +<a aria-label="Balance of Power: Videogame Propaganda 1980-2000" data-project="balance" href="balance-of-power-videogame-propaganda-1980-2000.html">Balance of Power:</a>....@.....@@@@@@@@@@@.#                  <a class="utility-link" href="about.html">about</a>           
-                         ++++++#.&amp;*.**.#<a aria-label="Balance of Power: Videogame Propaganda 1980-2000" data-project="balance" href="balance-of-power-videogame-propaganda-1980-2000.html">Videogame Propaganda 1980-2000</a>                          
-                      #+%+%%%++%@.&amp;&amp;.            .@.&amp;*...*....@.#*@@@.#%                        
-                  ++#*#%%%#%+                           %#<a aria-label="Musica Obscura issue 001" data-project="musica" href="musica-obscura-issue-001.html">Musica Obscura</a>*#                        
-                ++%+%%*..                                *<a aria-label="Musica Obscura issue 001" data-project="musica" href="musica-obscura-issue-001.html">issue 001</a>%%#*%%+                         <a class="utility-link" href="mailto:hello@example.com">contact</a>       
-               .**.##                                         %*#*#%%%***%+                        
-      ##%.  **...**.##..&amp;...***+..                              ++++%#.*                          
-      *%%.*.@.$.@.              *.@.                                                              
-       ..@@....*                     #*.&amp;*                                                        
-      .@@.@..$.                       .@.@$                                                      
-      #.....&amp;                         *&amp;.@.*#%                                                   
-     **..@@.@.  **..*                    ..#%@@.#                             ++#.*#@@             
-     %##<a aria-label="semantic web collager" data-project="semantic" href="semantic-web-collager.html">semantic</a>+%%%%++++++                +#@....                           #*###*.*%*+           
-     .*#<a aria-label="semantic web collager" data-project="semantic" href="semantic-web-collager.html">web collager</a>......*..               .@.@@.*+                         **.***.#%.+           
-     .....$.$..$.$.$.@.*%+               %%**.**+                       *......*%.+           
-     ........$@.......$@.#*.#+               $.@@@+                       +#.*...%+%+           
-     .....$.$@.$.....@..#**#+++             .@@@@@..                    +%+#.&amp;..%+++           
-     .@@@@@@@@@##.@@@@@..&amp;%**#+%+               .@..&amp;#                   +%+#&amp;*..#+++           
-     %%%%%#...@**&amp;.*%%%%%%%**.#.#                 $..@+                 %%%+<a aria-label="CGIS (commons-geographic-image-search)" data-project="cgis" href="cgis-commons-geographic-image-search.html">CGIS</a>.*#+++           
-     .@@@@@@@@@@@@@@@@@@@@.+#%#%&amp;                 *#..@##                <a aria-label="CGIS (commons-geographic-image-search)" data-project="cgis" href="cgis-commons-geographic-image-search.html">commons</a>...%+++           
-     .@@@@.@.**..**.......*+*##%++                   @.@.*.*            +%.<a aria-label="CGIS (commons-geographic-image-search)" data-project="cgis" href="cgis-commons-geographic-image-search.html">geographic</a>+             
-     .@@@@@@@@@@@@@@@@@@@@.+#+#%.*                     +..#%#+        ..<a aria-label="CGIS (commons-geographic-image-search)" data-project="cgis" href="cgis-commons-geographic-image-search.html">image-search</a>+             
-     .@@@@@@@@@@@@@@@@@@@@.+#+#%                         .$.@@.#++%%+++%#%%%*@@...                
-      #..@<a aria-label="assorted video and audio" data-project="media" href="assorted-video-audio.html">assorted</a>&amp;*###+#+%#                           @....*+%&amp;++%*###%%%%%                  
-        ...<a aria-label="assorted video and audio" data-project="media" href="assorted-video-audio.html">video &amp; audio</a>%%.@.                             .&amp;*#++#%##**.&amp;%+#+                   
-          .*.....$@..@@@...*                                   ++++++++++%+++                     
-            .$.@.@@@@.**                                                                          </pre>
-    <pre class="ascii-art ascii-art-mobile">    ....%.....%*          <a class="utility-link" href="about.html">about</a>
-   #@@@@%@...*#*#. *#
-   .@@@@%@...##..@.%#         <a class="utility-link" href="mailto:hello@example.com">contact</a>
-  ..@@@@%@...##..@.%%     #
-  .@@@@@%@....#@..@..     #
- *.&@@@@.@....#.....      #
-..@&@@.@.@$.$.#@&..@*
-....@@*@@@.@..+  ..$.
-@...<a aria-label="Balance of Power: Videogame Propaganda 1980-2000" data-project="balance" href="balance-of-power-videogame-propaganda-1980-2000.html">Balance</a>.$.+   *...
-<a aria-label="Balance of Power: Videogame Propaganda 1980-2000" data-project="balance" href="balance-of-power-videogame-propaganda-1980-2000.html">of Power:</a>#....+*   @.*+
-@$ .<a aria-label="Balance of Power: Videogame Propaganda 1980-2000" data-project="balance" href="balance-of-power-videogame-propaganda-1980-2000.html">Videogame</a>.%*   .**+
-@@<a aria-label="Balance of Power: Videogame Propaganda 1980-2000" data-project="balance" href="balance-of-power-videogame-propaganda-1980-2000.html">Propaganda</a>..%.    *.%+
-@.&<a aria-label="Balance of Power: Videogame Propaganda 1980-2000" data-project="balance" href="balance-of-power-videogame-propaganda-1980-2000.html">1980-2000</a>$.%.    .#++
-@.&#@@.@%@....%*    ##%#
-.@.#@@.@%@@.@.+     # %*
-*@*+@@.@%..@*.+     . .%+
- .%#@@.@%.#.%.+     & .%%
- .%+@<a aria-label="Musica Obscura issue 001" data-project="musica" href="musica-obscura-issue-001.html">Musica</a>#+.+     .  %++
- ..<a aria-label="Musica Obscura issue 001" data-project="musica" href="musica-obscura-issue-001.html">Obscura</a>** *+     .  #%+
- *@#++++**<a aria-label="Musica Obscura issue 001" data-project="musica" href="musica-obscura-issue-001.html">issue 001</a> .  %%+
-    ++#%.#++        *   ++
-    #####++         *   +++
-     .+&#+         *.   @..
-     <a aria-label="semantic web collager" data-project="semantic" href="semantic-web-collager.html">semantic</a>      ..   .&.
-                 <a aria-label="semantic web collager" data-project="semantic" href="semantic-web-collager.html">web</a>    &*.
-          <a aria-label="semantic web collager" data-project="semantic" href="semantic-web-collager.html">collager</a> .    &.#
-                        .**
-                *.*      .*
-                &@.      #*
-            %  .@@*      @.
-        <a aria-label="CGIS (commons-geographic-image-search)" data-project="cgis" href="cgis-commons-geographic-image-search.html">CGIS</a>%  ..$       ..
-          <a aria-label="CGIS (commons-geographic-image-search)" data-project="cgis" href="cgis-commons-geographic-image-search.html">commons</a>        @.
-      <a aria-label="CGIS (commons-geographic-image-search)" data-project="cgis" href="cgis-commons-geographic-image-search.html">geographic</a>#        @.
-          <a aria-label="CGIS (commons-geographic-image-search)" data-project="cgis" href="cgis-commons-geographic-image-search.html">image-</a>%        @.
-          <a aria-label="CGIS (commons-geographic-image-search)" data-project="cgis" href="cgis-commons-geographic-image-search.html">search</a>         ..
-          @@*@..         ..
-         .@@+@.#         @.
-       *$..+ *          @..
-       #...  +          .*.
-      @.@#              *&.
-<a aria-label="assorted video and audio" data-project="media" href="assorted-video-audio.html">assorted</a>+               ...
-   @ <a aria-label="assorted video and audio" data-project="media" href="assorted-video-audio.html">video &amp;</a>            ...
-  <a aria-label="assorted video and audio" data-project="media" href="assorted-video-audio.html">audio</a>#               %.&.
-   ...*               *#*..
-  &..%*               &&.@@
-  **@#                *..@@
-  +%.                %#@@.@
- ++&#                *%...@
- +%++               +*#.*.@
- +#%%               +#%.@.@
- +*#+               %%%.@%@
- +*#+               #%#..+.
- +&%%.              **%.%
- +%%#*+ % + *        *%*
- +#%%$.*%%++.        +
- ++%%.@*++##.
-    @@#%.&&*.*#
-    @@#..*...**+
-    .@%...%.%*##
-    ..#.*#+%.*#.
-     #%%+++% ..#
-     +#+++ + #*@
-       +     .*
-             ++</pre>
   </main>
   <script>
     // --- Infinite image rail ---
@@ -743,176 +676,664 @@
       setTimeout(sizeMobileTitle, 100);
     })();
 
-    // --- Keep mobile ASCII unscaled so links remain usable ---
+    // --- Dynamic ASCII Art Generator ---
     (function () {
-      const mobileAscii = document.querySelector('.ascii-art-mobile');
-      if (!mobileAscii) return;
+      const container = document.getElementById('organicAscii');
+      if (!container) return;
 
-      function resetMobileAsciiScale() {
-        mobileAscii.style.transform = '';
-        mobileAscii.style.marginBottom = '';
-      }
-
-      window.addEventListener('resize', resetMobileAsciiScale);
-      window.addEventListener('orientationchange', resetMobileAsciiScale);
-      window.addEventListener('load', resetMobileAsciiScale);
-      resetMobileAsciiScale();
-    })();
-
-    // --- Project link group hover ---
-    const groupedAsciiLinks = document.querySelectorAll('.ascii-art a[data-project]');
-
-    groupedAsciiLinks.forEach((link) => {
-      const projectName = link.dataset.project;
-      const matchingLinks = document.querySelectorAll(`.ascii-art a[data-project="${projectName}"]`);
-
-      const setActiveState = (active) => {
-        matchingLinks.forEach((matchingLink) => {
-          matchingLink.classList.toggle('is-active', active);
-        });
-      };
-
-      link.addEventListener('mouseenter', () => setActiveState(true));
-      link.addEventListener('mouseleave', () => setActiveState(false));
-      link.addEventListener('focus', () => setActiveState(true));
-      link.addEventListener('blur', () => setActiveState(false));
-    });
-
-    // --- Character cycling on hover ---
-    (function () {
-      const pre = document.querySelector('.ascii-art');
-      if (!pre) return;
-
-      // Pool of candidate replacement characters — all reliably single-width in monospace fonts
-      const REPLACEMENTS = [
-        // Lowercase latin
-        'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-        // Uppercase latin
-        'I', 'J', 'K', 'L', 'M',
-        // Latin-1 / punctuation (all ASCII-width)
-        '±', '×', '÷', '°', '§', '†', '‡', '«', '»', '¡', '¿',
-        '¢', '£', '¥', '©', '®', '™', '¬',
+      const links = [
+        { label: "Balance of Power:", href: "https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/", project: "balance", ariaLabel: "Balance of Power: Videogame Propaganda 1980-2000" },
+        { label: "Videogame Propaganda 1980-2000", href: "https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/", project: "balance", ariaLabel: "Balance of Power: Videogame Propaganda 1980-2000" },
+        { label: "Musica Obscura", href: "https://jarviskearns.github.io/musica-obscura/", project: "musica", ariaLabel: "Musica Obscura issue 001" },
+        { label: "issue 001", href: "https://jarviskearns.github.io/musica-obscura/", project: "musica", ariaLabel: "Musica Obscura issue 001" },
+        { label: "semantic", href: "semantic-web-collager.html", project: "semantic", ariaLabel: "semantic web collager" },
+        { label: "web collager", href: "semantic-web-collager.html", project: "semantic", ariaLabel: "semantic web collager" },
+        { label: "CGIS", href: "cgis-commons-geographic-image-search.html", project: "cgis", ariaLabel: "CGIS (commons-geographic-image-search)" },
+        { label: "commons", href: "cgis-commons-geographic-image-search.html", project: "cgis", ariaLabel: "CGIS (commons-geographic-image-search)" },
+        { label: "geographic", href: "cgis-commons-geographic-image-search.html", project: "cgis", ariaLabel: "CGIS (commons-geographic-image-search)" },
+        { label: "image-search", href: "cgis-commons-geographic-image-search.html", project: "cgis", ariaLabel: "CGIS (commons-geographic-image-search)" },
+        { label: "assorted", href: "assorted-video-audio.html", project: "media", ariaLabel: "assorted video and audio" },
+        { label: "video & audio", href: "assorted-video-audio.html", project: "media", ariaLabel: "assorted video and audio" }
       ];
 
-      // Wrap each non-whitespace character in a span, storing both data-char and data-original
-      function wrapTextNode(textNode) {
-        const text = textNode.data;
-        if (!text) return;
-        const frag = document.createDocumentFragment();
-        for (const ch of text) {
-          if (ch === ' ' || ch === '\n') {
-            frag.appendChild(document.createTextNode(ch));
+      const utilityLinks = [
+        { label: "Work:", type: "text", row: 0, xFraction: 0.08 },
+        { label: "contact", href: "mailto: jarviskearns10@gmail.com", type: "utility", row: 4, xFraction: 0.86 }
+      ];
+
+      const ASCII_CHAR_STACK = ['@', '@', '@', '@', '@', '@', '%', '#', '&', '$', '*', '+', '.', ' ', ' ', ' '];
+      const DENSE_CHAR_POOL = ['@', '@', '@', '%', '#', '&', '$', '*', '+', '.', '.'];
+
+      function characterFromPixel(brightness, noise) {
+        if (brightness < 28) {
+          return DENSE_CHAR_POOL[Math.floor(noise * DENSE_CHAR_POOL.length)];
+        }
+
+        const normalisedBrightness = clamp(brightness / 245, 0, 1);
+        let index = Math.floor(Math.pow(normalisedBrightness, 0.72) * (ASCII_CHAR_STACK.length - 1));
+
+        if (noise < 0.16) {
+          index -= 1;
+        } else if (noise > 0.78) {
+          index += 1;
+        }
+
+        index = clamp(index, 0, ASCII_CHAR_STACK.length - 1);
+        return ASCII_CHAR_STACK[index];
+      }
+
+      function getProjectGroups() {
+        const groups = [];
+
+        links.forEach((link) => {
+          const previousGroup = groups[groups.length - 1];
+
+          if (previousGroup && previousGroup.project === link.project && previousGroup.href === link.href) {
+            previousGroup.links.push(link);
           } else {
-            const span = document.createElement('span');
-            span.dataset.char = ch;
-            span.dataset.original = ch;
-            span.textContent = ch;
-            frag.appendChild(span);
+            groups.push({
+              project: link.project,
+              href: link.href,
+              ariaLabel: link.ariaLabel,
+              links: [link]
+            });
+          }
+        });
+
+        return groups;
+      }
+
+
+      function getCharacterSize(element) {
+        const tester = document.createElement("span");
+        const styles = getComputedStyle(element);
+        tester.textContent = "M".repeat(50);
+        tester.style.position = "absolute";
+        tester.style.visibility = "hidden";
+        tester.style.font = styles.font;
+        tester.style.letterSpacing = styles.letterSpacing;
+        tester.style.lineHeight = styles.lineHeight;
+        element.appendChild(tester);
+        const rect = tester.getBoundingClientRect();
+        const charWidth = rect.width / 50;
+        const charHeight = parseFloat(styles.lineHeight) || parseFloat(styles.fontSize);
+        tester.remove();
+        return { charWidth, charHeight };
+      }
+
+      function randomish(x, y) {
+        const value = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
+        return value - Math.floor(value);
+      }
+
+      function clamp(value, min, max) {
+        return Math.max(min, Math.min(max, value));
+      }
+
+
+      function wrapText(text, maxCharacters) {
+        const words = text.trim().split(" ").filter(Boolean);
+        const lines = [];
+        let currentLine = "";
+        for (const word of words) {
+          if (word.length > maxCharacters) {
+            if (currentLine) { lines.push(currentLine); currentLine = ""; }
+            for (let i = 0; i < word.length; i += maxCharacters) { lines.push(word.slice(i, i + maxCharacters)); }
+          } else if (!currentLine) {
+            currentLine = word;
+          } else if ((currentLine + " " + word).length <= maxCharacters) {
+            currentLine += " " + word;
+          } else {
+            lines.push(currentLine);
+            currentLine = word;
           }
         }
-        textNode.parentNode.replaceChild(frag, textNode);
+        if (currentLine) lines.push(currentLine);
+        return lines;
       }
 
-      function walkAndWrap(node) {
-        if (node.nodeType === Node.TEXT_NODE) {
-          wrapTextNode(node);
+      // --- Shape generation ---
+      let imageLoaded = false;
+      const templateImage = new Image();
+
+      function createShape(columns, rows) {
+        const grid = [];
+        const rowSegments = [];
+        const leftEdge = Math.max(2, Math.floor(columns * 0.1));
+
+        let imgData = null;
+        if (imageLoaded && templateImage.width > 0 && templateImage.height > 0) {
+          const canvas = document.createElement("canvas");
+          canvas.width = columns;
+          canvas.height = rows;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(templateImage, 0, 0, columns, rows);
+          try { imgData = ctx.getImageData(0, 0, columns, rows).data; } catch (e) { imgData = null; }
+        }
+
+        for (let row = 0; row < rows; row++) {
+          const gridRow = [];
+          for (let column = 0; column < columns; column++) {
+            const noise = randomish(column, row);
+
+            let character = " ";
+
+            if (imgData) {
+              const pixelIdx = (row * columns + column) * 4;
+              const r = imgData[pixelIdx];
+              const g = imgData[pixelIdx + 1];
+              const b = imgData[pixelIdx + 2];
+              const a = imgData[pixelIdx + 3];
+              const brightness = (r + g + b) / 3;
+              const isShape = a > 50 && brightness < 238;
+
+              if (isShape) {
+                character = characterFromPixel(brightness, noise);
+              }
+            }
+
+            gridRow.push(character);
+          }
+
+          const segments = [];
+          let start = null;
+          for (let col = 0; col < columns; col++) {
+            if (gridRow[col] !== " ") {
+              if (start === null) start = col;
+            } else {
+              if (start !== null) { segments.push({ start, end: col - 1, width: col - start }); start = null; }
+            }
+          }
+          if (start !== null) segments.push({ start, end: columns - 1, width: columns - start });
+
+          grid.push(gridRow);
+          rowSegments.push(segments);
+        }
+
+        return { grid, rowSegments, leftEdge };
+      }
+
+      // --- Link placement ---
+      function rectanglesOverlap(candidate, existingRectangles, gapRows) {
+        return existingRectangles.some((rectangle) => {
+          const separatedHorizontally = candidate.right < rectangle.left || candidate.left > rectangle.right;
+          const separatedVertically = candidate.bottom + gapRows < rectangle.top || candidate.top > rectangle.bottom + gapRows;
+          return !(separatedHorizontally || separatedVertically);
+        });
+      }
+
+      function placeLinks(rowSegments, columns, rows, leftEdge) {
+        const linkSegments = [];
+
+        const layouts = {
+          balance: { row: 0.12, column: 0.57, offsets: [0, 2, 9], maxWidth: 14 },
+          musica: { row: 0.49, column: 0.06, offsets: [0, 4], maxWidth: 42 },
+          semantic: { row: 0.28, column: 0.32, offsets: [0, 2], maxWidth: 22 },
+          cgis: { row: 0.58, column: 0.5, offsets: [0, 1, 2, 3], maxWidth: 22 },
+          media: { row: 0.75, column: 0.06, offsets: [0, 2], maxWidth: 22 }
+        };
+
+        function getRange(offset, text) {
+          return {
+            start: offset,
+            end: offset + text.length - 1
+          };
+        }
+
+        function chooseOverlappingOffset(text, desiredOffset, maxWidth, previousRange) {
+          const maximumOffset = Math.max(0, maxWidth - text.length);
+
+          if (!previousRange) {
+            return clamp(desiredOffset, 0, maximumOffset);
+          }
+
+          const minimumOverlap = 2;
+          const lowestOffset = previousRange.start - text.length + minimumOverlap;
+          const highestOffset = previousRange.end - minimumOverlap + 1;
+
+          return clamp(
+            desiredOffset,
+            Math.max(0, lowestOffset),
+            Math.min(maximumOffset, highestOffset)
+          );
+        }
+
+        function buildRowsForGroup(group, layout, availableWidth) {
+          const outputRows = [];
+          const maxWidth = Math.max(6, Math.min(layout.maxWidth, availableWidth));
+          let previousRange = null;
+
+          group.links.forEach((link, linkIndex) => {
+            const baseOffset = Math.min(layout.offsets[linkIndex] || 0, Math.max(0, maxWidth - 4));
+            const lineWidth = Math.max(4, maxWidth - baseOffset);
+            const wrappedLines = wrapText(link.label, lineWidth);
+
+            wrappedLines.forEach((line, wrapIndex) => {
+              const desiredOffset = baseOffset + wrapIndex * 3;
+              const offset = chooseOverlappingOffset(line, desiredOffset, maxWidth, previousRange);
+
+              outputRows.push({
+                offset,
+                text: line,
+                href: link.href,
+                project: link.project,
+                label: link.ariaLabel,
+                width: offset + line.length
+              });
+
+              previousRange = getRange(offset, line);
+            });
+          });
+
+          return outputRows;
+        }
+
+        getProjectGroups().forEach((group) => {
+          const layout = layouts[group.project];
+
+          if (!layout) {
+            return;
+          }
+
+          const targetRow = clamp(Math.floor(rows * layout.row), 0, rows - 1);
+          const targetColumn = clamp(Math.floor(columns * layout.column), 0, columns - 2);
+          const availableWidth = Math.max(6, columns - targetColumn - 1);
+          const outputRows = buildRowsForGroup(group, layout, availableWidth);
+          const blockWidth = Math.max(...outputRows.map((row) => row.width), 1);
+          const baseColumn = clamp(targetColumn, 0, columns - blockWidth - 1);
+
+          outputRows.forEach((outputRow, rowOffset) => {
+            const row = targetRow + rowOffset;
+
+            if (row < 0 || row >= rows) {
+              return;
+            }
+
+            linkSegments.push({
+              row,
+              column: baseColumn + outputRow.offset,
+              text: outputRow.text,
+              href: outputRow.href,
+              label: outputRow.label,
+              project: outputRow.project
+            });
+          });
+        });
+
+        return linkSegments;
+      }
+
+      function placeUtilityLinks(columns, rows) {
+        const utilitySegments = [];
+        for (const util of utilityLinks) {
+          const row = Math.min(util.row, rows - 1);
+          const column = Math.floor(columns * util.xFraction);
+          utilitySegments.push({
+            row: row,
+            column: clamp(column, 0, columns - util.label.length),
+            text: util.label,
+            href: util.href || null,
+            type: util.type
+          });
+        }
+        return utilitySegments;
+      }
+
+      // --- Rendering ---
+      function renderAsciiWithEmbeddedLinks(grid, linkSegments, utilitySegments) {
+        const pre = document.createElement("pre");
+        pre.className = "ascii-layer";
+
+        const linksByRow = new Map();
+        for (const segment of linkSegments) {
+          if (!linksByRow.has(segment.row)) linksByRow.set(segment.row, []);
+          linksByRow.get(segment.row).push(segment);
+        }
+        for (const segment of utilitySegments) {
+          if (!linksByRow.has(segment.row)) linksByRow.set(segment.row, []);
+          linksByRow.get(segment.row).push(segment);
+        }
+        for (const segments of linksByRow.values()) {
+          segments.sort((a, b) => a.column - b.column);
+        }
+
+        for (let row = 0; row < grid.length; row++) {
+          const rowText = grid[row].join("");
+          const rowLinks = linksByRow.get(row) || [];
+          let cursor = 0;
+
+          for (const segment of rowLinks) {
+            if (segment.column < cursor) continue;
+            pre.appendChild(document.createTextNode(rowText.slice(cursor, segment.column)));
+
+            if (segment.type === "text") {
+              // Plain text (e.g. "Work:")
+              const span = document.createElement("span");
+              span.textContent = segment.text;
+              pre.appendChild(span);
+            } else {
+              const anchor = document.createElement("a");
+              anchor.href = segment.href;
+              anchor.textContent = segment.text;
+              if (segment.label) anchor.setAttribute("aria-label", segment.label);
+              if (segment.project) anchor.setAttribute("data-project", segment.project);
+              if (segment.type === "utility") anchor.classList.add("utility-link");
+              pre.appendChild(anchor);
+            }
+            cursor = segment.column + segment.text.length;
+          }
+
+          pre.appendChild(document.createTextNode(rowText.slice(cursor)));
+          if (row < grid.length - 1) pre.appendChild(document.createTextNode("\n"));
+        }
+
+        return pre;
+      }
+      function renderFallbackLinks() {
+        if (cleanupCycling) {
+          cleanupCycling();
+          cleanupCycling = null;
+        }
+
+        container.innerHTML = `
+      <div class="ascii-fallback" data-fallback>
+        <span class="fallback-label">Work:</span>
+
+        <div class="fallback-project">
+          <a href="https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/" data-project="balance"
+            aria-label="Balance of Power: Videogame Propaganda 1980-2000">Balance of Power:</a>
+          <a href="https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/" data-project="balance"
+            aria-label="Balance of Power: Videogame Propaganda 1980-2000">Videogame Propaganda 1980-2000</a>
+        </div>
+
+        <div class="fallback-project">
+          <a href="https://jarviskearns.github.io/musica-obscura/" data-project="musica"
+            aria-label="Musica Obscura issue 001">Musica Obscura</a>
+          <a href="https://jarviskearns.github.io/musica-obscura/" data-project="musica"
+            aria-label="Musica Obscura issue 001">issue 001</a>
+        </div>
+
+        <div class="fallback-project">
+          <a href="semantic-web-collager.html" data-project="semantic"
+            aria-label="semantic web collager">semantic</a>
+          <a href="semantic-web-collager.html" data-project="semantic"
+            aria-label="semantic web collager">web collager</a>
+        </div>
+
+        <div class="fallback-project">
+          <a href="cgis-commons-geographic-image-search.html" data-project="cgis"
+            aria-label="CGIS (commons-geographic-image-search)">CGIS</a>
+          <a href="cgis-commons-geographic-image-search.html" data-project="cgis"
+            aria-label="CGIS (commons-geographic-image-search)">commons</a>
+          <a href="cgis-commons-geographic-image-search.html" data-project="cgis"
+            aria-label="CGIS (commons-geographic-image-search)">geographic</a>
+          <a href="cgis-commons-geographic-image-search.html" data-project="cgis"
+            aria-label="CGIS (commons-geographic-image-search)">image-search</a>
+        </div>
+
+        <div class="fallback-project">
+          <a href="assorted-video-audio.html" data-project="media"
+            aria-label="assorted video and audio">assorted</a>
+          <a href="assorted-video-audio.html" data-project="media"
+            aria-label="assorted video and audio">video &amp; audio</a>
+        </div>
+
+        <a href="mailto:hello@example.com" class="utility-link">contact</a>
+      </div>
+    `;
+        container.style.height = "auto";
+        container.style.overflow = "visible";
+        initProjectGroupHover(container);
+      }
+
+      // --- Character cycling ---
+      let cleanupCycling = null;
+
+      function initCharacterCycling(pre) {
+        if (cleanupCycling) cleanupCycling();
+
+        const REPLACEMENTS = [
+          'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+          'I', 'J', 'K', 'L', 'M',
+          '±', '×', '÷', '°', '§', '†', '‡', '«', '»', '¡', '¿',
+          '¢', '£', '¥', '©', '®', '™', '¬',
+        ];
+
+        function wrapTextNode(textNode) {
+          const text = textNode.data;
+          if (!text) return;
+          const frag = document.createDocumentFragment();
+          for (const ch of text) {
+            if (ch === ' ' || ch === '\n') {
+              frag.appendChild(document.createTextNode(ch));
+            } else {
+              const span = document.createElement('span');
+              span.dataset.char = ch;
+              span.dataset.original = ch;
+              span.textContent = ch;
+              frag.appendChild(span);
+            }
+          }
+          textNode.parentNode.replaceChild(frag, textNode);
+        }
+
+        function walkAndWrap(node) {
+          if (node.nodeType === Node.TEXT_NODE) { wrapTextNode(node); return; }
+          Array.from(node.childNodes).forEach(walkAndWrap);
+        }
+
+        walkAndWrap(pre);
+
+        let hoveredOriginal = null;
+        let cyclingInterval = null;
+        const revertTimers = {};
+        const tickers = [];
+
+        function pickReplacement() {
+          const usedChars = new Set(Array.from(pre.querySelectorAll('[data-char]')).map(el => el.dataset.char));
+          const available = REPLACEMENTS.filter(c => !usedChars.has(c));
+          if (available.length === 0) return null;
+          return available[Math.floor(Math.random() * available.length)];
+        }
+
+        function applyChar(originalChar, displayChar) {
+          const spans = pre.querySelectorAll(`[data-original="${CSS.escape(originalChar)}"]`);
+          spans.forEach(el => { el.dataset.char = displayChar; el.textContent = displayChar; });
+          pre.querySelectorAll('.char-highlight').forEach(el => el.classList.remove('char-highlight'));
+          pre.querySelectorAll(`[data-char="${CSS.escape(displayChar)}"]`).forEach(el => el.classList.add('char-highlight'));
+        }
+
+        function startCycling(originalChar) {
+          clearTimeout(revertTimers[originalChar]);
+          delete revertTimers[originalChar];
+          function doSwap() { const next = pickReplacement(); if (next) applyChar(originalChar, next); }
+          doSwap();
+          cyclingInterval = setInterval(doSwap, 80);
+        }
+
+        function stopCycling(originalChar) {
+          clearInterval(cyclingInterval);
+          cyclingInterval = null;
+          const REVERT_STEPS = 4;
+          const REVERT_INTERVAL = 60;
+          let step = 0;
+          revertTimers[originalChar] = setTimeout(() => {
+            const ticker = setInterval(() => {
+              step++;
+              if (step >= REVERT_STEPS) {
+                clearInterval(ticker);
+                const idx = tickers.indexOf(ticker);
+                if (idx > -1) tickers.splice(idx, 1);
+                const spans = pre.querySelectorAll(`[data-original="${CSS.escape(originalChar)}"]`);
+                spans.forEach(el => { el.dataset.char = el.dataset.original; el.textContent = el.dataset.original; });
+                delete revertTimers[originalChar];
+                if (hoveredOriginal === null) { pre.querySelectorAll('.char-highlight').forEach(el => el.classList.remove('char-highlight')); }
+              } else { const next = pickReplacement(); if (next) applyChar(originalChar, next); }
+            }, REVERT_INTERVAL);
+            tickers.push(ticker);
+          }, 50);
+        }
+
+        const onMouseOver = (e) => {
+          const span = e.target.closest('[data-original]');
+          const insideLink = span && span.closest('a');
+          const original = insideLink ? span.dataset.original : null;
+          if (original === hoveredOriginal) return;
+          if (hoveredOriginal !== null) stopCycling(hoveredOriginal);
+          pre.querySelectorAll('.char-highlight').forEach(el => el.classList.remove('char-highlight'));
+          hoveredOriginal = original;
+          if (original) startCycling(original);
+        };
+
+        const onMouseLeave = () => {
+          if (hoveredOriginal !== null) stopCycling(hoveredOriginal);
+          hoveredOriginal = null;
+          pre.querySelectorAll('.char-highlight').forEach(el => el.classList.remove('char-highlight'));
+        };
+
+        pre.addEventListener('mouseover', onMouseOver);
+        pre.addEventListener('mouseleave', onMouseLeave);
+
+        cleanupCycling = () => {
+          clearInterval(cyclingInterval);
+          Object.keys(revertTimers).forEach(key => clearTimeout(revertTimers[key]));
+          tickers.forEach(clearInterval);
+          pre.removeEventListener('mouseover', onMouseOver);
+          pre.removeEventListener('mouseleave', onMouseLeave);
+        };
+      }
+
+      // --- Project link group hover ---
+      function initProjectGroupHover(pre) {
+        const groupedLinks = pre.querySelectorAll('a[data-project]');
+        groupedLinks.forEach((link) => {
+          const projectName = link.dataset.project;
+          const matchingLinks = pre.querySelectorAll(`a[data-project="${projectName}"]`);
+          const setActiveState = (active) => {
+            matchingLinks.forEach((ml) => ml.classList.toggle('is-active', active));
+          };
+          link.addEventListener('mouseenter', () => setActiveState(true));
+          link.addEventListener('mouseleave', () => setActiveState(false));
+          link.addEventListener('focus', () => setActiveState(true));
+          link.addEventListener('blur', () => setActiveState(false));
+        });
+      }
+
+      initProjectGroupHover(container);
+
+      // --- Main generation ---
+      function generateAsciiShape() {
+        if (!imageLoaded || templateImage.naturalWidth <= 0 || templateImage.naturalHeight <= 0) {
+          renderFallbackLinks();
           return;
         }
-        Array.from(node.childNodes).forEach(walkAndWrap);
-      }
 
-      walkAndWrap(pre);
+        updateContainerSize();
+        container.innerHTML = "";
+        container.style.overflow = "hidden";
 
-      let hoveredOriginal = null;  // data-original of the currently hovered group
-      let cyclingInterval = null;
-      const revertTimers = {};     // originalChar → setTimeout id
+        const { charWidth, charHeight } = getCharacterSize(container);
+        const columns = Math.floor(container.clientWidth / charWidth);
+        const savedRows = parseInt(container.dataset.asciiRows || "0", 10);
+        const rows = savedRows > 0 ? savedRows : Math.floor(container.clientHeight / charHeight);
 
-      function pickReplacement() {
-        const usedChars = new Set(
-          Array.from(pre.querySelectorAll('[data-char]')).map(el => el.dataset.char)
-        );
-        const available = REPLACEMENTS.filter(c => !usedChars.has(c));
-        if (available.length === 0) return null;
-        return available[Math.floor(Math.random() * available.length)];
-      }
-
-      function applyChar(originalChar, displayChar) {
-        const spans = pre.querySelectorAll(`[data-original="${CSS.escape(originalChar)}"]`);
-        spans.forEach(el => {
-          el.dataset.char = displayChar;
-          el.textContent = displayChar;
-        });
-        pre.querySelectorAll('.char-highlight').forEach(el => el.classList.remove('char-highlight'));
-        pre.querySelectorAll(`[data-char="${CSS.escape(displayChar)}"]`).forEach(el => el.classList.add('char-highlight'));
-      }
-
-      function startCycling(originalChar) {
-        // Cancel any pending revert for this group
-        clearTimeout(revertTimers[originalChar]);
-        delete revertTimers[originalChar];
-
-        function doSwap() {
-          const next = pickReplacement();
-          if (next) applyChar(originalChar, next);
+        if (columns < 20 || rows < 14) {
+          renderFallbackLinks();
+          return;
         }
 
-        doSwap(); // fire immediately
-        cyclingInterval = setInterval(doSwap, 80);
+        const { grid, rowSegments, leftEdge } = createShape(columns, rows);
+        const linkSegments = placeLinks(rowSegments, columns, rows, leftEdge);
+        const utilitySegments = placeUtilityLinks(columns, rows);
+        const preElement = renderAsciiWithEmbeddedLinks(grid, linkSegments, utilitySegments);
+        container.appendChild(preElement);
+        initCharacterCycling(preElement);
+        initProjectGroupHover(preElement);
       }
 
-      function stopCycling(originalChar) {
-        clearInterval(cyclingInterval);
-        cyclingInterval = null;
+      // --- Image loading ---
+      templateImage.onload = () => {
+        imageLoaded = true;
+        updateContainerSize();
+        generateAsciiShape();
+      };
 
-        // Short delay, then do a few quick random swaps before snapping back to original
-        const REVERT_STEPS = 4;
-        const REVERT_INTERVAL = 60;
-        let step = 0;
+      templateImage.onerror = () => {
+        imageLoaded = false;
+        updateContainerSize();
+        renderFallbackLinks();
+      };
 
-        revertTimers[originalChar] = setTimeout(() => {
-          const ticker = setInterval(() => {
-            step++;
-            if (step >= REVERT_STEPS) {
-              clearInterval(ticker);
-              // Snap to original
-              const spans = pre.querySelectorAll(`[data-original="${CSS.escape(originalChar)}"]`);
-              spans.forEach(el => {
-                el.dataset.char = el.dataset.original;
-                el.textContent = el.dataset.original;
-              });
-              delete revertTimers[originalChar];
-              if (hoveredOriginal === null) {
-                pre.querySelectorAll('.char-highlight').forEach(el => el.classList.remove('char-highlight'));
-              }
-            } else {
-              const next = pickReplacement();
-              if (next) applyChar(originalChar, next);
-            }
-          }, REVERT_INTERVAL);
-        }, 50);
+      templateImage.src = "images/shape.png";
+
+      // --- Auto-size container and regenerate on resize ---
+      function getAvailableAsciiHeight() {
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+        const mainElement = container.closest('main');
+        const mainStyle = mainElement ? getComputedStyle(mainElement) : null;
+        const bottomPadding = mainStyle ? parseFloat(mainStyle.paddingBottom) || 0 : 0;
+        const containerTop = container.getBoundingClientRect().top;
+        return Math.max(1, viewportHeight - containerTop - bottomPadding);
       }
 
-      pre.addEventListener('mouseover', (e) => {
-        const span = e.target.closest('[data-original]');
-        // Only cycle chars that are inside a link
-        const insideLink = span && span.closest('a');
-        const original = insideLink ? span.dataset.original : null;
-        if (original === hoveredOriginal) return;
+      function updateContainerSize() {
+        const style = getComputedStyle(container);
+        const fontSize = parseFloat(style.fontSize);
+        const lineHeight = parseFloat(style.lineHeight) || fontSize * 1.05;
 
-        // Stop cycling the previous group and schedule its revert
-        if (hoveredOriginal !== null) stopCycling(hoveredOriginal);
+        if (!imageLoaded || templateImage.naturalWidth <= 0 || templateImage.naturalHeight <= 0) {
+          delete container.dataset.asciiRows;
+          container.style.height = "auto";
+          container.style.maxHeight = "none";
+          container.style.overflow = "visible";
+          return;
+        }
 
-        pre.querySelectorAll('.char-highlight').forEach(el => el.classList.remove('char-highlight'));
-        hoveredOriginal = original;
+        const { charWidth, charHeight } = getCharacterSize(container);
+        const imageRatio = templateImage.naturalHeight / templateImage.naturalWidth;
+        const idealRows = Math.max(14, Math.round((container.clientWidth / charWidth) * imageRatio));
+        const availableHeight = getAvailableAsciiHeight();
+        const maxRowsOnScreen = Math.max(14, Math.floor(availableHeight / charHeight));
+        const fittedRows = Math.min(idealRows, maxRowsOnScreen);
+        const fittedHeight = Math.min(availableHeight, fittedRows * charHeight);
 
-        if (original) startCycling(original);
+        container.dataset.asciiRows = String(fittedRows);
+        container.style.height = fittedHeight + 'px';
+        container.style.maxHeight = availableHeight + 'px';
+        container.style.overflow = "hidden";
+      }
+
+      updateContainerSize();
+      renderFallbackLinks();
+
+      let resizeFrame = null;
+      const resizeObserver = new ResizeObserver(() => {
+        cancelAnimationFrame(resizeFrame);
+        resizeFrame = requestAnimationFrame(() => {
+          updateContainerSize();
+          generateAsciiShape();
+        });
       });
+      resizeObserver.observe(container);
 
-      pre.addEventListener('mouseleave', () => {
-        if (hoveredOriginal !== null) stopCycling(hoveredOriginal);
-        hoveredOriginal = null;
-        pre.querySelectorAll('.char-highlight').forEach(el => el.classList.remove('char-highlight'));
-      });
+      if (templateImage.complete) {
+        if (templateImage.naturalWidth > 0) {
+          imageLoaded = true;
+          updateContainerSize();
+          generateAsciiShape();
+        } else {
+          imageLoaded = false;
+          updateContainerSize();
+          renderFallbackLinks();
+        }
+      } else {
+        setTimeout(() => {
+          if (!imageLoaded) {
+            updateContainerSize();
+            renderFallbackLinks();
+          }
+        }, 500);
+      }
     })();
   </script>
 </body>
