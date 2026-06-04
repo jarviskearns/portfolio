@@ -548,7 +548,7 @@
     <button class="image-lightbox-close" type="button" aria-label="Close expanded image">×</button>
     <div class="image-lightbox-inner">
       <img alt="" />
-      <a class="image-lightbox-link" href="#" target="_blank" rel="noopener">open project</a>
+      <a class="image-lightbox-link" href="#" target="_blank" rel="noopener">project link</a>
     </div>
   </div>
   <script>
@@ -571,9 +571,21 @@
       const lightboxClose = imageLightbox ? imageLightbox.querySelector('.image-lightbox-close') : null;
 
       const projectLinksByPrefix = [
-        { prefix: '202605', href: 'https://jarviskearns.github.io/musica-obscura/', label: 'open Musica Obscura' },
-        { prefix: 'commons', href: 'https://jarviskearns.github.io/web-collage/', label: 'open semantic web collager' },
-        { prefix: 'Screenshot', href: 'https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/', label: 'open Balance of Power archive' }
+        {
+          prefix: '202605',
+          href: 'https://jarviskearns.github.io/musica-obscura/',
+          label: 'Musica Obscura'
+        },
+        {
+          prefix: 'commons',
+          href: 'https://jarviskearns.github.io/web-collage/',
+          label: 'semantic web collager'
+        },
+        {
+          prefix: 'Screenshot',
+          href: 'https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/',
+          label: 'Balance of Power archive'
+        }
       ];
 
       function getImageFilename(image) {
@@ -594,7 +606,7 @@
         lightboxImage.src = image.currentSrc || image.src;
         lightboxImage.alt = image.alt || '';
         lightboxLink.href = project ? project.href : '#';
-        lightboxLink.textContent = project ? project.label : 'open project';
+        lightboxLink.textContent = project ? project.label : '';
         lightboxLink.style.display = project ? '' : 'none';
 
         imageLightbox.classList.add('is-open');
@@ -718,9 +730,8 @@
         const currentAxis = horizontal ? 'horizontal' : 'vertical';
         const currentInlineSize = horizontal ? scroller.clientWidth : scroller.clientHeight;
 
-        // Mobile browsers fire resize events while the address bar hides/shows.
-        // Ignore those unless the rail width/axis actually changed, otherwise
-        // the auto-scrolling image rail visibly jumps back.
+        // Mobile browsers can fire resize while the address bar hides/shows.
+        // Ignore those height-only changes so the image rail does not jump.
         if (!forceReset && lastMeasuredAxis === currentAxis && Math.abs(currentInlineSize - lastMeasuredInlineSize) < 2) {
           return;
         }
@@ -940,28 +951,37 @@
         }
 
         if (viewportWidth <= 1300) {
-          return Math.round(83 + ((viewportWidth - 900) / 400) * 25);
+          return Math.round(83 + ((viewportWidth - 900) / 400) * 29);
         }
 
         if (viewportWidth <= 1700) {
-          return Math.round(108 + ((viewportWidth - 1300) / 400) * 20);
+          return Math.round(112 + ((viewportWidth - 1300) / 400) * 26);
         }
 
-        return 132;
+        return 146;
       }
 
       function fitAsciiFontToColumnTarget() {
         const targetColumns = getTargetAsciiColumns();
-        const style = getComputedStyle(container);
-        const currentFontSize = parseFloat(style.fontSize) || 12;
+        const previousFontSize = container.style.fontSize;
+        const probeFontSize = 10;
+
+        // Measure from a fixed temporary font size so repeated rendering does
+        // not feed back into itself and create a visible jitter.
+        container.style.fontSize = `${probeFontSize}px`;
         const { charWidth } = getCharacterSize(container);
-        const currentColumns = Math.max(1, container.clientWidth / Math.max(0.1, charWidth));
         const minimumFontSize = window.matchMedia('(max-width: 520px)').matches ? 5.7 : 6.8;
-        const maximumFontSize = window.matchMedia('(max-width: 520px)').matches ? 10.5 : 15;
-        const fittedFontSize = clamp(currentFontSize * (currentColumns / targetColumns), minimumFontSize, maximumFontSize);
+        const maximumFontSize = window.matchMedia('(max-width: 520px)').matches ? 10.5 : 18;
+        const fittedFontSize = clamp(
+          (container.clientWidth / Math.max(0.1, charWidth)) * (probeFontSize / targetColumns),
+          minimumFontSize,
+          maximumFontSize
+        );
 
         container.dataset.targetAsciiColumns = String(targetColumns);
         container.style.fontSize = `${fittedFontSize}px`;
+
+        return previousFontSize !== container.style.fontSize;
       }
 
       function getCharacterSize(element) {
@@ -1497,10 +1517,6 @@
       }
 
       function updateContainerSize() {
-        const style = getComputedStyle(container);
-        const fontSize = parseFloat(style.fontSize);
-        const lineHeight = parseFloat(style.lineHeight) || fontSize * 1.05;
-
         if (!imageLoaded || templateImage.naturalWidth <= 0 || templateImage.naturalHeight <= 0) {
           delete container.dataset.asciiRows;
           delete container.dataset.targetAsciiColumns;
@@ -1511,9 +1527,19 @@
         }
 
         fitAsciiFontToColumnTarget();
+
+        const style = getComputedStyle(container);
+        const fontSize = parseFloat(style.fontSize);
+        const lineHeight = parseFloat(style.lineHeight) || fontSize * 1.05;
         const { charWidth, charHeight } = getCharacterSize(container);
         const imageRatio = templateImage.naturalHeight / templateImage.naturalWidth;
-        const idealRows = Math.max(14, Math.round((container.clientWidth / charWidth) * imageRatio));
+        const columns = Math.max(1, container.clientWidth / Math.max(0.1, charWidth));
+
+        // Preserve the source image's visual aspect ratio in rendered character
+        // cells. This prevents the ASCII from stretching vertically as the
+        // resolution changes.
+        const characterAspectCorrection = charWidth / Math.max(0.1, charHeight);
+        const idealRows = Math.max(14, Math.round(columns * imageRatio * characterAspectCorrection));
         const availableHeight = getAvailableAsciiHeight();
         const maxRowsOnScreen = Math.max(14, Math.floor(availableHeight / charHeight));
         const fittedRows = Math.min(idealRows, maxRowsOnScreen);
@@ -1529,14 +1555,37 @@
       renderFallbackLinks();
 
       let resizeFrame = null;
-      const resizeObserver = new ResizeObserver(() => {
+      let lastAsciiLayoutWidth = Math.round(container.getBoundingClientRect().width);
+      let lastAsciiViewportWidth = document.documentElement.clientWidth || window.innerWidth || 0;
+      let lastAsciiOrientation = window.matchMedia('(max-width: 900px)').matches ? 'mobile' : 'desktop';
+
+      function scheduleAsciiRegeneration(force) {
         cancelAnimationFrame(resizeFrame);
+
         resizeFrame = requestAnimationFrame(() => {
+          const currentLayoutWidth = Math.round(container.getBoundingClientRect().width);
+          const currentViewportWidth = document.documentElement.clientWidth || window.innerWidth || 0;
+          const currentOrientation = window.matchMedia('(max-width: 900px)').matches ? 'mobile' : 'desktop';
+          const widthChanged = Math.abs(currentLayoutWidth - lastAsciiLayoutWidth) > 2 ||
+            Math.abs(currentViewportWidth - lastAsciiViewportWidth) > 2;
+          const orientationChanged = currentOrientation !== lastAsciiOrientation;
+
+          // Do not regenerate for mobile height-only viewport changes during scroll.
+          if (!force && !widthChanged && !orientationChanged) {
+            return;
+          }
+
+          lastAsciiLayoutWidth = currentLayoutWidth;
+          lastAsciiViewportWidth = currentViewportWidth;
+          lastAsciiOrientation = currentOrientation;
+
           updateContainerSize();
           generateAsciiShape();
         });
-      });
-      resizeObserver.observe(container);
+      }
+
+      window.addEventListener('resize', () => scheduleAsciiRegeneration(false));
+      window.addEventListener('orientationchange', () => scheduleAsciiRegeneration(true));
 
       if (templateImage.complete) {
         if (templateImage.naturalWidth > 0) {
