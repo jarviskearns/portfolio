@@ -100,6 +100,72 @@
       max-height: 280px;
       height: auto;
       object-fit: contain;
+      cursor: zoom-in;
+    }
+
+    .image-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--text);
+    }
+
+    .image-lightbox.is-open {
+      display: flex;
+    }
+
+    .image-lightbox-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      max-width: min(92vw, 1100px);
+      max-height: 92vh;
+    }
+
+    .image-lightbox img {
+      display: block;
+      max-width: 100%;
+      max-height: calc(92vh - 64px);
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      background: transparent;
+    }
+
+    .image-lightbox-link {
+      margin-top: 14px;
+      color: var(--link);
+      font: inherit;
+      font-size: clamp(14px, 1.5vw, 20px);
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    .image-lightbox-link:hover,
+    .image-lightbox-link:focus-visible {
+      background: var(--hover-background);
+      color: var(--hover-text);
+      outline: none;
+    }
+
+    .image-lightbox-close {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
     }
 
     .organic-ascii {
@@ -107,6 +173,7 @@
       max-width: 100%;
       margin: 10vh 0 0 0;
       overflow: hidden;
+      max-height: calc(100vh - 48px - 10vh);
       background: transparent;
       color: var(--text);
       font-family: var(--font);
@@ -259,6 +326,21 @@
         height: 104px;
         max-height: 104px;
         object-fit: contain;
+      }
+
+      .image-lightbox {
+        padding: 20px;
+        touch-action: none;
+      }
+
+      .image-lightbox img {
+        max-height: calc(92vh - 72px);
+      }
+
+      .image-lightbox-close {
+        top: 12px;
+        right: 16px;
+        font-size: 26px;
       }
 
       .organic-ascii {
@@ -416,30 +498,28 @@
     </aside>
     <h1 class="site-banner"></h1>
     <nav class="organic-ascii" id="organicAscii" aria-label="Main links">
-      <!-- ascii-generator-source: images/shape.png only; fallback: simple link rows -->
       <div class="ascii-fallback" data-fallback>
         <span class="fallback-label">Work:</span>
 
         <div class="fallback-project">
-          <a href="https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/" data-project="balance"
+          <a href="balance-of-power-videogame-propaganda-1980-2000.html" data-project="balance"
             aria-label="Balance of Power: Videogame Propaganda 1980-2000">Balance of Power:</a>
-          <a href="https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/" data-project="balance"
+          <a href="balance-of-power-videogame-propaganda-1980-2000.html" data-project="balance"
             aria-label="Balance of Power: Videogame Propaganda 1980-2000">Videogame Propaganda 1980-2000</a>
         </div>
 
         <div class="fallback-project">
-          <a href="https://jarviskearns.github.io/musica-obscura/" data-project="musica"
-            aria-label="Musica Obscura issue 001">Musica
-            Obscura</a>
-          <a href="https://jarviskearns.github.io/musica-obscura/" data-project="musica"
-            aria-label="Musica Obscura issue 001">issue
-            001</a>
+          <a href="musica-obscura-issue-001.html" data-project="musica"
+            aria-label="Musica Obscura issue 001">Musica Obscura</a>
+          <a href="musica-obscura-issue-001.html" data-project="musica"
+            aria-label="Musica Obscura issue 001">issue 001</a>
         </div>
 
         <div class="fallback-project">
-          <a href="semantic-web-collager.html" data-project="semantic" aria-label="semantic web collager">semantic</a>
-          <a href="semantic-web-collager.html" data-project="semantic" aria-label="semantic web collager">web
-            collager</a>
+          <a href="semantic-web-collager.html" data-project="semantic"
+            aria-label="semantic web collager">semantic</a>
+          <a href="semantic-web-collager.html" data-project="semantic"
+            aria-label="semantic web collager">web collager</a>
         </div>
 
         <div class="fallback-project">
@@ -454,15 +534,23 @@
         </div>
 
         <div class="fallback-project">
-          <a href="assorted-video-audio.html" data-project="media" aria-label="assorted video and audio">assorted</a>
-          <a href="assorted-video-audio.html" data-project="media" aria-label="assorted video and audio">video &amp;
-            audio</a>
+          <a href="assorted-video-audio.html" data-project="media"
+            aria-label="assorted video and audio">assorted</a>
+          <a href="assorted-video-audio.html" data-project="media"
+            aria-label="assorted video and audio">video &amp; audio</a>
         </div>
 
         <a href="mailto:hello@example.com" class="utility-link">contact</a>
       </div>
     </nav>
   </main>
+  <div class="image-lightbox" id="imageLightbox" aria-hidden="true">
+    <button class="image-lightbox-close" type="button" aria-label="Close expanded image">×</button>
+    <div class="image-lightbox-inner">
+      <img alt="" />
+      <a class="image-lightbox-link" href="#" target="_blank" rel="noopener">open project</a>
+    </div>
+  </div>
   <script>
     // --- Infinite image rail ---
     (function () {
@@ -476,6 +564,81 @@
       const sourceImages = Array.from(track.querySelectorAll('img:not([aria-hidden="true"])'));
 
       if (sourceImages.length === 0) return;
+
+      const imageLightbox = document.getElementById('imageLightbox');
+      const lightboxImage = imageLightbox ? imageLightbox.querySelector('img') : null;
+      const lightboxLink = imageLightbox ? imageLightbox.querySelector('.image-lightbox-link') : null;
+      const lightboxClose = imageLightbox ? imageLightbox.querySelector('.image-lightbox-close') : null;
+
+      const projectLinksByPrefix = [
+        {
+          prefix: '202605',
+          href: 'https://jarviskearns.github.io/musica-obscura/',
+          label: 'open Musica Obscura'
+        },
+        {
+          prefix: 'commons',
+          href: 'https://jarviskearns.github.io/web-collage/',
+          label: 'open semantic web collager'
+        },
+        {
+          prefix: 'Screenshot',
+          href: 'https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/',
+          label: 'open Balance of Power archive'
+        }
+      ];
+
+      function getImageFilename(image) {
+        const src = image.getAttribute('src') || '';
+        return decodeURIComponent(src.split('/').pop() || '');
+      }
+
+      function getProjectLinkForImage(image) {
+        const filename = getImageFilename(image);
+        return projectLinksByPrefix.find((project) => filename.startsWith(project.prefix)) || null;
+      }
+
+      function openImageLightbox(image) {
+        if (!imageLightbox || !lightboxImage || !lightboxLink) return;
+
+        const project = getProjectLinkForImage(image);
+
+        lightboxImage.src = image.currentSrc || image.src;
+        lightboxImage.alt = image.alt || '';
+        lightboxLink.href = project ? project.href : '#';
+        lightboxLink.textContent = project ? project.label : 'open project';
+        lightboxLink.style.display = project ? '' : 'none';
+
+        imageLightbox.classList.add('is-open');
+        imageLightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+
+        if (lightboxClose) {
+          lightboxClose.focus({ preventScroll: true });
+        }
+      }
+
+      function closeImageLightbox() {
+        if (!imageLightbox) return;
+
+        imageLightbox.classList.remove('is-open');
+        imageLightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      if (imageLightbox) {
+        imageLightbox.addEventListener('click', (event) => {
+          if (event.target === imageLightbox || event.target === lightboxClose) {
+            closeImageLightbox();
+          }
+        });
+
+        window.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && imageLightbox.classList.contains('is-open')) {
+            closeImageLightbox();
+          }
+        });
+      }
 
       track.innerHTML = '';
 
@@ -516,6 +679,8 @@
       let previousFrameTime = null;
       let isRepositioning = false;
       let resumeTimer = null;
+      let lastMeasuredAxis = null;
+      let lastMeasuredInlineSize = 0;
 
       function isHorizontalLayout() {
         return mobileLayout.matches;
@@ -560,16 +725,38 @@
         }, 900);
       }
 
-      function measureRail() {
+      function measureRail(forceReset) {
+        const horizontal = isHorizontalLayout();
+        const currentAxis = horizontal ? 'horizontal' : 'vertical';
+        const currentInlineSize = horizontal ? scroller.clientWidth : scroller.clientHeight;
+
+        // Mobile browsers often fire resize events while the address bar hides/shows
+        // during vertical page scrolling. Ignore those unless the rail width/axis
+        // has actually changed, otherwise the image rail visibly jumps back.
+        if (!forceReset && lastMeasuredAxis === currentAxis && Math.abs(currentInlineSize - lastMeasuredInlineSize) < 2) {
+          return;
+        }
+
+        const previousSetLength = setLength;
+        const previousPosition = getCurrentScrollPosition();
+        const previousOffset = previousSetLength > 0 ? previousPosition % previousSetLength : 0;
+
         const mainSetBounds = mainSet.getBoundingClientRect();
-        const mainSetLength = isHorizontalLayout() ? mainSetBounds.width : mainSetBounds.height;
+        const mainSetLength = horizontal ? mainSetBounds.width : mainSetBounds.height;
 
         setLength = mainSetLength + getTrackGap();
+        lastMeasuredAxis = currentAxis;
+        lastMeasuredInlineSize = currentInlineSize;
 
         if (setLength <= 0) return;
 
         isRepositioning = true;
-        setCurrentScrollPosition(setLength);
+
+        if (forceReset || previousSetLength <= 0) {
+          setCurrentScrollPosition(setLength);
+        } else {
+          setCurrentScrollPosition(setLength + Math.min(previousOffset, setLength - 1));
+        }
 
         requestAnimationFrame(() => {
           isRepositioning = false;
@@ -624,8 +811,17 @@
       scroller.addEventListener('focusin', pauseAutoScroll);
       scroller.addEventListener('focusout', resumeAutoScrollSoon);
 
-      window.addEventListener('resize', measureRail);
-      mobileLayout.addEventListener('change', measureRail);
+      scroller.addEventListener('click', (event) => {
+        const clickedImage = event.target.closest('.work-track img');
+        if (!clickedImage) return;
+
+        event.preventDefault();
+        pauseAutoScrollTemporarily();
+        openImageLightbox(clickedImage);
+      });
+
+      window.addEventListener('resize', () => measureRail(false));
+      mobileLayout.addEventListener('change', () => measureRail(true));
 
       const imageLoadPromises = Array.from(track.querySelectorAll('img')).map((image) => {
         if (image.complete) return Promise.resolve();
@@ -637,7 +833,7 @@
       });
 
       Promise.all(imageLoadPromises).then(() => {
-        measureRail();
+        measureRail(true);
         requestAnimationFrame(animateRail);
       });
     })();
@@ -682,10 +878,10 @@
       if (!container) return;
 
       const links = [
-        { label: "Balance of Power:", href: "https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/", project: "balance", ariaLabel: "Balance of Power: Videogame Propaganda 1980-2000" },
-        { label: "Videogame Propaganda 1980-2000", href: "https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/", project: "balance", ariaLabel: "Balance of Power: Videogame Propaganda 1980-2000" },
-        { label: "Musica Obscura", href: "https://jarviskearns.github.io/musica-obscura/", project: "musica", ariaLabel: "Musica Obscura issue 001" },
-        { label: "issue 001", href: "https://jarviskearns.github.io/musica-obscura/", project: "musica", ariaLabel: "Musica Obscura issue 001" },
+        { label: "Balance of Power:", href: "balance-of-power-videogame-propaganda-1980-2000.html", project: "balance", ariaLabel: "Balance of Power: Videogame Propaganda 1980-2000" },
+        { label: "Videogame Propaganda 1980-2000", href: "balance-of-power-videogame-propaganda-1980-2000.html", project: "balance", ariaLabel: "Balance of Power: Videogame Propaganda 1980-2000" },
+        { label: "Musica Obscura", href: "musica-obscura-issue-001.html", project: "musica", ariaLabel: "Musica Obscura issue 001" },
+        { label: "issue 001", href: "musica-obscura-issue-001.html", project: "musica", ariaLabel: "Musica Obscura issue 001" },
         { label: "semantic", href: "semantic-web-collager.html", project: "semantic", ariaLabel: "semantic web collager" },
         { label: "web collager", href: "semantic-web-collager.html", project: "semantic", ariaLabel: "semantic web collager" },
         { label: "CGIS", href: "cgis-commons-geographic-image-search.html", project: "cgis", ariaLabel: "CGIS (commons-geographic-image-search)" },
@@ -698,19 +894,19 @@
 
       const utilityLinks = [
         { label: "Work:", type: "text", row: 0, xFraction: 0.08 },
-        { label: "contact", href: "mailto: jarviskearns10@gmail.com", type: "utility", row: 4, xFraction: 0.86 }
+        { label: "contact", href: "mailto:hello@example.com", type: "utility", row: 4, xFraction: 0.86 }
       ];
 
-      const ASCII_CHAR_STACK = ['@', '@', '@', '@', '@', '@', '%', '#', '&', '$', '*', '+', '.', ' ', ' ', ' '];
-      const DENSE_CHAR_POOL = ['@', '@', '@', '%', '#', '&', '$', '*', '+', '.', '.'];
+      const ASCII_CHAR_STACK = ['@', '%', '#', '&', '$', '*', '+', '.'];
+      const DENSE_CHAR_POOL = ['@', '@', '%', '%', '#', '#', '&', '$', '*', '+', '.', '.'];
 
       function characterFromPixel(brightness, noise) {
-        if (brightness < 28) {
+        if (brightness < 18) {
           return DENSE_CHAR_POOL[Math.floor(noise * DENSE_CHAR_POOL.length)];
         }
 
-        const normalisedBrightness = clamp(brightness / 245, 0, 1);
-        let index = Math.floor(Math.pow(normalisedBrightness, 0.72) * (ASCII_CHAR_STACK.length - 1));
+        const normalisedBrightness = clamp(brightness / 220, 0, 1);
+        let index = Math.floor(Math.pow(normalisedBrightness, 0.55) * (ASCII_CHAR_STACK.length - 1));
 
         if (noise < 0.16) {
           index -= 1;
@@ -743,7 +939,6 @@
         return groups;
       }
 
-
       function getCharacterSize(element) {
         const tester = document.createElement("span");
         const styles = getComputedStyle(element);
@@ -770,7 +965,59 @@
         return Math.max(min, Math.min(max, value));
       }
 
+      function getTargetAsciiColumns() {
+        const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
 
+        if (viewportWidth <= 520) {
+          return 59;
+        }
+
+        if (viewportWidth <= 900) {
+          const progress = (viewportWidth - 520) / 380;
+          return Math.round(59 + progress * 15);
+        }
+
+        if (viewportWidth <= 1280) {
+          const progress = (viewportWidth - 900) / 380;
+          return Math.round(74 + progress * 16);
+        }
+
+        if (viewportWidth <= 1500) {
+          return 90;
+        }
+
+        if (viewportWidth <= 1900) {
+          const progress = (viewportWidth - 1500) / 400;
+          return Math.round(90 + progress * 3);
+        }
+
+        return 93;
+      }
+
+      function fitAsciiFontToColumnTarget() {
+        const targetColumns = getTargetAsciiColumns();
+
+        // Measure from the stylesheet size first, rather than compounding the
+        // previously fitted inline size after each resize.
+        container.style.fontSize = "";
+
+        const baseStyles = getComputedStyle(container);
+        const baseFontSize = parseFloat(baseStyles.fontSize) || 12;
+        const { charWidth } = getCharacterSize(container);
+
+        if (!charWidth || !container.clientWidth) {
+          container.dataset.targetAsciiColumns = String(targetColumns);
+          return targetColumns;
+        }
+
+        const targetCharacterWidth = container.clientWidth / targetColumns;
+        const fittedFontSize = clamp(baseFontSize * (targetCharacterWidth / charWidth), 4.5, 18);
+
+        container.style.fontSize = fittedFontSize + "px";
+        container.dataset.targetAsciiColumns = String(targetColumns);
+
+        return targetColumns;
+      }
       function wrapText(text, maxCharacters) {
         const words = text.trim().split(" ").filter(Boolean);
         const lines = [];
@@ -800,32 +1047,40 @@
         const grid = [];
         const rowSegments = [];
         const leftEdge = Math.max(2, Math.floor(columns * 0.1));
-
         let imgData = null;
+
         if (imageLoaded && templateImage.width > 0 && templateImage.height > 0) {
           const canvas = document.createElement("canvas");
           canvas.width = columns;
           canvas.height = rows;
-          const ctx = canvas.getContext("2d");
+          const ctx = canvas.getContext("2d", { willReadFrequently: true });
+          ctx.imageSmoothingEnabled = true;
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, columns, rows);
           ctx.drawImage(templateImage, 0, 0, columns, rows);
-          try { imgData = ctx.getImageData(0, 0, columns, rows).data; } catch (e) { imgData = null; }
+
+          try {
+            imgData = ctx.getImageData(0, 0, columns, rows).data;
+          } catch (e) {
+            imgData = null;
+          }
         }
 
         for (let row = 0; row < rows; row++) {
           const gridRow = [];
+
           for (let column = 0; column < columns; column++) {
             const noise = randomish(column, row);
-
             let character = " ";
 
             if (imgData) {
-              const pixelIdx = (row * columns + column) * 4;
-              const r = imgData[pixelIdx];
-              const g = imgData[pixelIdx + 1];
-              const b = imgData[pixelIdx + 2];
-              const a = imgData[pixelIdx + 3];
+              const pixelIndex = (row * columns + column) * 4;
+              const r = imgData[pixelIndex];
+              const g = imgData[pixelIndex + 1];
+              const b = imgData[pixelIndex + 2];
+              const a = imgData[pixelIndex + 3];
               const brightness = (r + g + b) / 3;
-              const isShape = a > 50 && brightness < 238;
+              const isShape = a > 50 && brightness < 220;
 
               if (isShape) {
                 character = characterFromPixel(brightness, noise);
@@ -837,14 +1092,19 @@
 
           const segments = [];
           let start = null;
-          for (let col = 0; col < columns; col++) {
-            if (gridRow[col] !== " ") {
-              if (start === null) start = col;
-            } else {
-              if (start !== null) { segments.push({ start, end: col - 1, width: col - start }); start = null; }
+
+          for (let column = 0; column < columns; column++) {
+            if (gridRow[column] !== " ") {
+              if (start === null) start = column;
+            } else if (start !== null) {
+              segments.push({ start, end: column - 1, width: column - start });
+              start = null;
             }
           }
-          if (start !== null) segments.push({ start, end: columns - 1, width: columns - start });
+
+          if (start !== null) {
+            segments.push({ start, end: columns - 1, width: columns - start });
+          }
 
           grid.push(gridRow);
           rowSegments.push(segments);
@@ -853,7 +1113,7 @@
         return { grid, rowSegments, leftEdge };
       }
 
-      // --- Link placement ---
+            // --- Link placement ---
       function rectanglesOverlap(candidate, existingRectangles, gapRows) {
         return existingRectangles.some((rectangle) => {
           const separatedHorizontally = candidate.right < rectangle.left || candidate.left > rectangle.right;
@@ -864,13 +1124,14 @@
 
       function placeLinks(rowSegments, columns, rows, leftEdge) {
         const linkSegments = [];
+        const placedRectangles = [];
 
         const layouts = {
-          balance: { row: 0.12, column: 0.57, offsets: [0, 2, 9], maxWidth: 14 },
-          musica: { row: 0.49, column: 0.06, offsets: [0, 4], maxWidth: 42 },
-          semantic: { row: 0.28, column: 0.32, offsets: [0, 2], maxWidth: 22 },
-          cgis: { row: 0.58, column: 0.5, offsets: [0, 1, 2, 3], maxWidth: 22 },
-          media: { row: 0.75, column: 0.06, offsets: [0, 2], maxWidth: 22 }
+          balance: { row: 0.075, column: 0.28, offsets: [0, 6], maxWidth: 42, searchRows: 7, searchColumns: 14, coverageWeight: 1250 },
+          musica: { row: 0.18, column: 0.53, offsets: [0, 2], maxWidth: 24, searchRows: 7, searchColumns: 14, coverageWeight: 1250 },
+          semantic: { row: 0.40, column: 0.06, offsets: [0, 2], maxWidth: 22, searchRows: 8, searchColumns: 14, coverageWeight: 1250 },
+          cgis: { row: 0.56, column: 0.55, offsets: [0, 1, 2, 3], maxWidth: 19, searchRows: 9, searchColumns: 18, coverageWeight: 1450 },
+          media: { row: 0.75, column: 0.08, offsets: [0, 2], maxWidth: 22, searchRows: 8, searchColumns: 14, coverageWeight: 1250 }
         };
 
         function getRange(offset, text) {
@@ -928,6 +1189,87 @@
           return outputRows;
         }
 
+        function isInsideShape(row, column) {
+          if (row < 0 || row >= rows || column < 0 || column >= columns) {
+            return false;
+          }
+
+          return (rowSegments[row] || []).some((segment) => {
+            return column >= segment.start && column <= segment.end;
+          });
+        }
+
+        function rectanglesOverlapSoft(candidate, existingRectangles, gapRows) {
+          return existingRectangles.some((rectangle) => {
+            const separatedHorizontally = candidate.right < rectangle.left || candidate.left > rectangle.right;
+            const separatedVertically = candidate.bottom + gapRows < rectangle.top || candidate.top > rectangle.bottom + gapRows;
+            return !(separatedHorizontally || separatedVertically);
+          });
+        }
+
+        function scoreLinkBlock(outputRows, row, column, targetRow, targetColumn, layout) {
+          let coveredCharacters = 0;
+          let totalCharacters = 0;
+
+          outputRows.forEach((outputRow, rowOffset) => {
+            for (let i = 0; i < outputRow.text.length; i++) {
+              if (outputRow.text[i] === " ") continue;
+
+              totalCharacters++;
+              if (isInsideShape(row + rowOffset, column + outputRow.offset + i)) {
+                coveredCharacters++;
+              }
+            }
+          });
+
+          const coverage = totalCharacters ? coveredCharacters / totalCharacters : 0;
+          const rowDistance = Math.abs(row - targetRow);
+          const columnDistance = Math.abs(column - targetColumn);
+          const coverageWeight = layout.coverageWeight || 1200;
+
+          return (coverage * coverageWeight) - (rowDistance * 22) - (columnDistance * 2.2);
+        }
+
+        function findBestPlacement(outputRows, blockWidth, targetRow, targetColumn, layout, minimumGapRows) {
+          let bestPlacement = null;
+          const maxStartRow = Math.max(0, rows - outputRows.length);
+          const maxStartColumn = Math.max(0, columns - blockWidth - 1);
+          const searchRows = layout.searchRows || rows;
+          const searchColumns = layout.searchColumns || columns;
+          const rowStart = clamp(targetRow - searchRows, 0, maxStartRow);
+          const rowEnd = clamp(targetRow + searchRows, 0, maxStartRow);
+          const columnStart = clamp(targetColumn - searchColumns, 0, maxStartColumn);
+          const columnEnd = clamp(targetColumn + searchColumns, 0, maxStartColumn);
+
+          for (let row = rowStart; row <= rowEnd; row++) {
+            for (let column = columnStart; column <= columnEnd; column++) {
+              const rectangle = {
+                left: column,
+                right: column + blockWidth - 1,
+                top: row,
+                bottom: row + outputRows.length - 1
+              };
+
+              if (rectanglesOverlapSoft(rectangle, placedRectangles, minimumGapRows)) {
+                continue;
+              }
+
+              const score = scoreLinkBlock(outputRows, row, column, targetRow, targetColumn, layout);
+
+              if (!bestPlacement || score > bestPlacement.score) {
+                bestPlacement = {
+                  row,
+                  column,
+                  rectangle,
+                  score
+                };
+              }
+            }
+          }
+
+          return bestPlacement;
+        }
+
         getProjectGroups().forEach((group) => {
           const layout = layouts[group.project];
 
@@ -937,13 +1279,17 @@
 
           const targetRow = clamp(Math.floor(rows * layout.row), 0, rows - 1);
           const targetColumn = clamp(Math.floor(columns * layout.column), 0, columns - 2);
-          const availableWidth = Math.max(6, columns - targetColumn - 1);
-          const outputRows = buildRowsForGroup(group, layout, availableWidth);
+          const outputRows = buildRowsForGroup(group, layout, columns - 2);
           const blockWidth = Math.max(...outputRows.map((row) => row.width), 1);
-          const baseColumn = clamp(targetColumn, 0, columns - blockWidth - 1);
+          const minimumGapRows = Math.max(1, Math.floor(rows * 0.025));
+          const placement = findBestPlacement(outputRows, blockWidth, targetRow, targetColumn, layout, minimumGapRows);
+
+          if (!placement) {
+            return;
+          }
 
           outputRows.forEach((outputRow, rowOffset) => {
-            const row = targetRow + rowOffset;
+            const row = placement.row + rowOffset;
 
             if (row < 0 || row >= rows) {
               return;
@@ -951,18 +1297,19 @@
 
             linkSegments.push({
               row,
-              column: baseColumn + outputRow.offset,
+              column: placement.column + outputRow.offset,
               text: outputRow.text,
               href: outputRow.href,
               label: outputRow.label,
               project: outputRow.project
             });
           });
+
+          placedRectangles.push(placement.rectangle);
         });
 
         return linkSegments;
       }
-
       function placeUtilityLinks(columns, rows) {
         const utilitySegments = [];
         for (const util of utilityLinks) {
@@ -1040,16 +1387,16 @@
         <span class="fallback-label">Work:</span>
 
         <div class="fallback-project">
-          <a href="https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/" data-project="balance"
+          <a href="balance-of-power-videogame-propaganda-1980-2000.html" data-project="balance"
             aria-label="Balance of Power: Videogame Propaganda 1980-2000">Balance of Power:</a>
-          <a href="https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/" data-project="balance"
+          <a href="balance-of-power-videogame-propaganda-1980-2000.html" data-project="balance"
             aria-label="Balance of Power: Videogame Propaganda 1980-2000">Videogame Propaganda 1980-2000</a>
         </div>
 
         <div class="fallback-project">
-          <a href="https://jarviskearns.github.io/musica-obscura/" data-project="musica"
+          <a href="musica-obscura-issue-001.html" data-project="musica"
             aria-label="Musica Obscura issue 001">Musica Obscura</a>
-          <a href="https://jarviskearns.github.io/musica-obscura/" data-project="musica"
+          <a href="musica-obscura-issue-001.html" data-project="musica"
             aria-label="Musica Obscura issue 001">issue 001</a>
         </div>
 
@@ -1232,8 +1579,9 @@
         container.innerHTML = "";
         container.style.overflow = "hidden";
 
-        const { charWidth, charHeight } = getCharacterSize(container);
-        const columns = Math.floor(container.clientWidth / charWidth);
+        const { charHeight } = getCharacterSize(container);
+        const savedColumns = parseInt(container.dataset.targetAsciiColumns || "0", 10);
+        const columns = savedColumns > 0 ? savedColumns : getTargetAsciiColumns();
         const savedRows = parseInt(container.dataset.asciiRows || "0", 10);
         const rows = savedRows > 0 ? savedRows : Math.floor(container.clientHeight / charHeight);
 
@@ -1250,17 +1598,14 @@
         initCharacterCycling(preElement);
         initProjectGroupHover(preElement);
       }
-
-      // --- Image loading ---
+// --- Image loading ---
       templateImage.onload = () => {
         imageLoaded = true;
-        updateContainerSize();
         generateAsciiShape();
       };
 
       templateImage.onerror = () => {
         imageLoaded = false;
-        updateContainerSize();
         renderFallbackLinks();
       };
 
@@ -1277,25 +1622,26 @@
       }
 
       function updateContainerSize() {
-        const style = getComputedStyle(container);
-        const fontSize = parseFloat(style.fontSize);
-        const lineHeight = parseFloat(style.lineHeight) || fontSize * 1.05;
-
         if (!imageLoaded || templateImage.naturalWidth <= 0 || templateImage.naturalHeight <= 0) {
+          container.style.fontSize = "";
           delete container.dataset.asciiRows;
+          delete container.dataset.targetAsciiColumns;
           container.style.height = "auto";
           container.style.maxHeight = "none";
           container.style.overflow = "visible";
           return;
         }
 
-        const { charWidth, charHeight } = getCharacterSize(container);
+        const targetColumns = fitAsciiFontToColumnTarget();
+        const style = getComputedStyle(container);
+        const fontSize = parseFloat(style.fontSize);
+        const lineHeight = parseFloat(style.lineHeight) || fontSize * 1.05;
         const imageRatio = templateImage.naturalHeight / templateImage.naturalWidth;
-        const idealRows = Math.max(14, Math.round((container.clientWidth / charWidth) * imageRatio));
+        const idealRows = Math.max(14, Math.round(targetColumns * imageRatio));
         const availableHeight = getAvailableAsciiHeight();
-        const maxRowsOnScreen = Math.max(14, Math.floor(availableHeight / charHeight));
+        const maxRowsOnScreen = Math.max(14, Math.floor(availableHeight / lineHeight));
         const fittedRows = Math.min(idealRows, maxRowsOnScreen);
-        const fittedHeight = Math.min(availableHeight, fittedRows * charHeight);
+        const fittedHeight = Math.min(availableHeight, fittedRows * lineHeight);
 
         container.dataset.asciiRows = String(fittedRows);
         container.style.height = fittedHeight + 'px';
@@ -1316,23 +1662,21 @@
       });
       resizeObserver.observe(container);
 
+      window.addEventListener('orientationchange', () => {
+        requestAnimationFrame(() => {
+          updateContainerSize();
+          generateAsciiShape();
+        });
+      });
+
       if (templateImage.complete) {
         if (templateImage.naturalWidth > 0) {
           imageLoaded = true;
-          updateContainerSize();
           generateAsciiShape();
         } else {
           imageLoaded = false;
-          updateContainerSize();
           renderFallbackLinks();
         }
-      } else {
-        setTimeout(() => {
-          if (!imageLoaded) {
-            updateContainerSize();
-            renderFallbackLinks();
-          }
-        }, 500);
       }
     })();
   </script>
