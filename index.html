@@ -173,7 +173,6 @@
       max-width: 100%;
       margin: 10vh 0 0 0;
       overflow: hidden;
-      max-height: calc(100vh - 48px - 10vh);
       background: transparent;
       color: var(--text);
       font-family: var(--font);
@@ -498,49 +497,50 @@
     </aside>
     <h1 class="site-banner"></h1>
     <nav class="organic-ascii" id="organicAscii" aria-label="Main links">
+      <!-- ascii-generator-source: images/shape.png only; fallback: simple link rows -->
       <div class="ascii-fallback" data-fallback>
         <span class="fallback-label">Work:</span>
 
         <div class="fallback-project">
-          <a href="balance-of-power-videogame-propaganda-1980-2000.html" data-project="balance"
+          <a href="https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/" data-project="balance"
             aria-label="Balance of Power: Videogame Propaganda 1980-2000">Balance of Power:</a>
-          <a href="balance-of-power-videogame-propaganda-1980-2000.html" data-project="balance"
+          <a href="https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/" data-project="balance"
             aria-label="Balance of Power: Videogame Propaganda 1980-2000">Videogame Propaganda 1980-2000</a>
         </div>
 
         <div class="fallback-project">
-          <a href="musica-obscura-issue-001.html" data-project="musica"
-            aria-label="Musica Obscura issue 001">Musica Obscura</a>
-          <a href="musica-obscura-issue-001.html" data-project="musica"
-            aria-label="Musica Obscura issue 001">issue 001</a>
+          <a href="https://jarviskearns.github.io/musica-obscura/" data-project="musica"
+            aria-label="Musica Obscura issue 001">Musica
+            Obscura</a>
+          <a href="https://jarviskearns.github.io/musica-obscura/" data-project="musica"
+            aria-label="Musica Obscura issue 001">issue
+            001</a>
         </div>
 
         <div class="fallback-project">
-          <a href="https://jarviskearns.github.io/web-collage/" data-project="semantic"
-            aria-label="semantic web collager">semantic</a>
-          <a href="https://jarviskearns.github.io/web-collage/" data-project="semantic"
-            aria-label="semantic web collager">web collager</a>
+          <a href="https://jarviskearns.github.io/web-collage/" data-project="semantic" aria-label="semantic web collager">semantic</a>
+          <a href="https://jarviskearns.github.io/web-collage/" data-project="semantic" aria-label="semantic web collager">web
+            collager</a>
         </div>
 
         <div class="fallback-project">
-          <a href="cgis-commons-geographic-image-search.html" data-project="cgis"
+          <a href="https://jarviskearns.github.io/web-collage/" data-project="cgis"
             aria-label="CGIS (commons-geographic-image-search)">CGIS</a>
-          <a href="cgis-commons-geographic-image-search.html" data-project="cgis"
+          <a href="https://jarviskearns.github.io/web-collage/" data-project="cgis"
             aria-label="CGIS (commons-geographic-image-search)">commons</a>
-          <a href="cgis-commons-geographic-image-search.html" data-project="cgis"
+          <a href="https://jarviskearns.github.io/web-collage/" data-project="cgis"
             aria-label="CGIS (commons-geographic-image-search)">geographic</a>
-          <a href="cgis-commons-geographic-image-search.html" data-project="cgis"
+          <a href="https://jarviskearns.github.io/web-collage/" data-project="cgis"
             aria-label="CGIS (commons-geographic-image-search)">image-search</a>
         </div>
 
         <div class="fallback-project">
-          <a href="assorted-video-audio.html" data-project="media"
-            aria-label="assorted video and audio">assorted</a>
-          <a href="assorted-video-audio.html" data-project="media"
-            aria-label="assorted video and audio">video &amp; audio</a>
+          <a href="assorted-video-audio.html" data-project="media" aria-label="assorted video and audio">assorted</a>
+          <a href="assorted-video-audio.html" data-project="media" aria-label="assorted video and audio">video &amp;
+            audio</a>
         </div>
 
-        <a href="mailto:hello@example.com" class="utility-link">contact</a>
+        <a href="mailto:jarviskearns10@gmail.com" class="utility-link">contact</a>
       </div>
     </nav>
   </main>
@@ -571,21 +571,9 @@
       const lightboxClose = imageLightbox ? imageLightbox.querySelector('.image-lightbox-close') : null;
 
       const projectLinksByPrefix = [
-        {
-          prefix: '202605',
-          href: 'https://jarviskearns.github.io/musica-obscura/',
-          label: 'open Musica Obscura'
-        },
-        {
-          prefix: 'commons',
-          href: 'https://jarviskearns.github.io/web-collage/',
-          label: 'open semantic web collager'
-        },
-        {
-          prefix: 'Screenshot',
-          href: 'https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/',
-          label: 'open Balance of Power archive'
-        }
+        { prefix: '202605', href: 'https://jarviskearns.github.io/musica-obscura/', label: 'open Musica Obscura' },
+        { prefix: 'commons', href: 'https://jarviskearns.github.io/web-collage/', label: 'open semantic web collager' },
+        { prefix: 'Screenshot', href: 'https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/', label: 'open Balance of Power archive' }
       ];
 
       function getImageFilename(image) {
@@ -730,9 +718,9 @@
         const currentAxis = horizontal ? 'horizontal' : 'vertical';
         const currentInlineSize = horizontal ? scroller.clientWidth : scroller.clientHeight;
 
-        // Mobile browsers often fire resize events while the address bar hides/shows
-        // during vertical page scrolling. Ignore those unless the rail width/axis
-        // has actually changed, otherwise the image rail visibly jumps back.
+        // Mobile browsers fire resize events while the address bar hides/shows.
+        // Ignore those unless the rail width/axis actually changed, otherwise
+        // the auto-scrolling image rail visibly jumps back.
         if (!forceReset && lastMeasuredAxis === currentAxis && Math.abs(currentInlineSize - lastMeasuredInlineSize) < 2) {
           return;
         }
@@ -878,35 +866,35 @@
       if (!container) return;
 
       const links = [
-        { label: "Balance of Power:", href: "balance-of-power-videogame-propaganda-1980-2000.html", project: "balance", ariaLabel: "Balance of Power: Videogame Propaganda 1980-2000" },
-        { label: "Videogame Propaganda 1980-2000", href: "balance-of-power-videogame-propaganda-1980-2000.html", project: "balance", ariaLabel: "Balance of Power: Videogame Propaganda 1980-2000" },
-        { label: "Musica Obscura", href: "musica-obscura-issue-001.html", project: "musica", ariaLabel: "Musica Obscura issue 001" },
-        { label: "issue 001", href: "musica-obscura-issue-001.html", project: "musica", ariaLabel: "Musica Obscura issue 001" },
+        { label: "Balance of Power:", href: "https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/", project: "balance", ariaLabel: "Balance of Power: Videogame Propaganda 1980-2000" },
+        { label: "Videogame Propaganda 1980-2000", href: "https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/", project: "balance", ariaLabel: "Balance of Power: Videogame Propaganda 1980-2000" },
+        { label: "Musica Obscura", href: "https://jarviskearns.github.io/musica-obscura/", project: "musica", ariaLabel: "Musica Obscura issue 001" },
+        { label: "issue 001", href: "https://jarviskearns.github.io/musica-obscura/", project: "musica", ariaLabel: "Musica Obscura issue 001" },
         { label: "semantic", href: "https://jarviskearns.github.io/web-collage/", project: "semantic", ariaLabel: "semantic web collager" },
         { label: "web collager", href: "https://jarviskearns.github.io/web-collage/", project: "semantic", ariaLabel: "semantic web collager" },
-        { label: "CGIS", href: "cgis-commons-geographic-image-search.html", project: "cgis", ariaLabel: "CGIS (commons-geographic-image-search)" },
-        { label: "commons", href: "cgis-commons-geographic-image-search.html", project: "cgis", ariaLabel: "CGIS (commons-geographic-image-search)" },
-        { label: "geographic", href: "cgis-commons-geographic-image-search.html", project: "cgis", ariaLabel: "CGIS (commons-geographic-image-search)" },
-        { label: "image-search", href: "cgis-commons-geographic-image-search.html", project: "cgis", ariaLabel: "CGIS (commons-geographic-image-search)" },
+        { label: "CGIS", href: "https://jarviskearns.github.io/web-collage/", project: "cgis", ariaLabel: "CGIS (commons-geographic-image-search)" },
+        { label: "commons", href: "https://jarviskearns.github.io/web-collage/", project: "cgis", ariaLabel: "CGIS (commons-geographic-image-search)" },
+        { label: "geographic", href: "https://jarviskearns.github.io/web-collage/", project: "cgis", ariaLabel: "CGIS (commons-geographic-image-search)" },
+        { label: "image-search", href: "https://jarviskearns.github.io/web-collage/", project: "cgis", ariaLabel: "CGIS (commons-geographic-image-search)" },
         { label: "assorted", href: "assorted-video-audio.html", project: "media", ariaLabel: "assorted video and audio" },
         { label: "video & audio", href: "assorted-video-audio.html", project: "media", ariaLabel: "assorted video and audio" }
       ];
 
       const utilityLinks = [
         { label: "Work:", type: "text", row: 0, xFraction: 0.08 },
-        { label: "contact", href: "mailto:hello@example.com", type: "utility", row: 4, xFraction: 0.86 }
+        { label: "contact", href: "mailto:jarviskearns10@gmail.com", type: "utility", row: 4, xFraction: 0.86 }
       ];
 
-      const ASCII_CHAR_STACK = ['@', '%', '#', '&', '$', '*', '+', '.'];
-      const DENSE_CHAR_POOL = ['@', '@', '%', '%', '#', '#', '&', '$', '*', '+', '.', '.'];
+      const ASCII_CHAR_STACK = ['@', '@', '@', '@', '@', '@', '%', '#', '&', '$', '*', '+', '.', ' ', ' ', ' '];
+      const DENSE_CHAR_POOL = ['@', '@', '@', '%', '#', '&', '$', '*', '+', '.', '.'];
 
       function characterFromPixel(brightness, noise) {
-        if (brightness < 18) {
+        if (brightness < 28) {
           return DENSE_CHAR_POOL[Math.floor(noise * DENSE_CHAR_POOL.length)];
         }
 
-        const normalisedBrightness = clamp(brightness / 220, 0, 1);
-        let index = Math.floor(Math.pow(normalisedBrightness, 0.55) * (ASCII_CHAR_STACK.length - 1));
+        const normalisedBrightness = clamp(brightness / 245, 0, 1);
+        let index = Math.floor(Math.pow(normalisedBrightness, 0.72) * (ASCII_CHAR_STACK.length - 1));
 
         if (noise < 0.16) {
           index -= 1;
@@ -939,6 +927,43 @@
         return groups;
       }
 
+
+      function getTargetAsciiColumns() {
+        const viewportWidth = document.documentElement.clientWidth || window.innerWidth || 0;
+
+        if (viewportWidth <= 520) {
+          return 59;
+        }
+
+        if (viewportWidth <= 900) {
+          return Math.round(59 + ((viewportWidth - 520) / 380) * 24);
+        }
+
+        if (viewportWidth <= 1300) {
+          return Math.round(83 + ((viewportWidth - 900) / 400) * 25);
+        }
+
+        if (viewportWidth <= 1700) {
+          return Math.round(108 + ((viewportWidth - 1300) / 400) * 20);
+        }
+
+        return 132;
+      }
+
+      function fitAsciiFontToColumnTarget() {
+        const targetColumns = getTargetAsciiColumns();
+        const style = getComputedStyle(container);
+        const currentFontSize = parseFloat(style.fontSize) || 12;
+        const { charWidth } = getCharacterSize(container);
+        const currentColumns = Math.max(1, container.clientWidth / Math.max(0.1, charWidth));
+        const minimumFontSize = window.matchMedia('(max-width: 520px)').matches ? 5.7 : 6.8;
+        const maximumFontSize = window.matchMedia('(max-width: 520px)').matches ? 10.5 : 15;
+        const fittedFontSize = clamp(currentFontSize * (currentColumns / targetColumns), minimumFontSize, maximumFontSize);
+
+        container.dataset.targetAsciiColumns = String(targetColumns);
+        container.style.fontSize = `${fittedFontSize}px`;
+      }
+
       function getCharacterSize(element) {
         const tester = document.createElement("span");
         const styles = getComputedStyle(element);
@@ -965,59 +990,7 @@
         return Math.max(min, Math.min(max, value));
       }
 
-      function getTargetAsciiColumns() {
-        const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
 
-        if (viewportWidth <= 520) {
-          return 59;
-        }
-
-        if (viewportWidth <= 900) {
-          const progress = (viewportWidth - 520) / 380;
-          return Math.round(59 + progress * 15);
-        }
-
-        if (viewportWidth <= 1280) {
-          const progress = (viewportWidth - 900) / 380;
-          return Math.round(74 + progress * 16);
-        }
-
-        if (viewportWidth <= 1500) {
-          return 90;
-        }
-
-        if (viewportWidth <= 1900) {
-          const progress = (viewportWidth - 1500) / 400;
-          return Math.round(90 + progress * 3);
-        }
-
-        return 93;
-      }
-
-      function fitAsciiFontToColumnTarget() {
-        const targetColumns = getTargetAsciiColumns();
-
-        // Measure from the stylesheet size first, rather than compounding the
-        // previously fitted inline size after each resize.
-        container.style.fontSize = "";
-
-        const baseStyles = getComputedStyle(container);
-        const baseFontSize = parseFloat(baseStyles.fontSize) || 12;
-        const { charWidth } = getCharacterSize(container);
-
-        if (!charWidth || !container.clientWidth) {
-          container.dataset.targetAsciiColumns = String(targetColumns);
-          return targetColumns;
-        }
-
-        const targetCharacterWidth = container.clientWidth / targetColumns;
-        const fittedFontSize = clamp(baseFontSize * (targetCharacterWidth / charWidth), 4.5, 18);
-
-        container.style.fontSize = fittedFontSize + "px";
-        container.dataset.targetAsciiColumns = String(targetColumns);
-
-        return targetColumns;
-      }
       function wrapText(text, maxCharacters) {
         const words = text.trim().split(" ").filter(Boolean);
         const lines = [];
@@ -1047,40 +1020,32 @@
         const grid = [];
         const rowSegments = [];
         const leftEdge = Math.max(2, Math.floor(columns * 0.1));
-        let imgData = null;
 
+        let imgData = null;
         if (imageLoaded && templateImage.width > 0 && templateImage.height > 0) {
           const canvas = document.createElement("canvas");
           canvas.width = columns;
           canvas.height = rows;
-          const ctx = canvas.getContext("2d", { willReadFrequently: true });
-          ctx.imageSmoothingEnabled = true;
-          ctx.fillStyle = "#ffffff";
-          ctx.fillRect(0, 0, columns, rows);
+          const ctx = canvas.getContext("2d");
           ctx.drawImage(templateImage, 0, 0, columns, rows);
-
-          try {
-            imgData = ctx.getImageData(0, 0, columns, rows).data;
-          } catch (e) {
-            imgData = null;
-          }
+          try { imgData = ctx.getImageData(0, 0, columns, rows).data; } catch (e) { imgData = null; }
         }
 
         for (let row = 0; row < rows; row++) {
           const gridRow = [];
-
           for (let column = 0; column < columns; column++) {
             const noise = randomish(column, row);
+
             let character = " ";
 
             if (imgData) {
-              const pixelIndex = (row * columns + column) * 4;
-              const r = imgData[pixelIndex];
-              const g = imgData[pixelIndex + 1];
-              const b = imgData[pixelIndex + 2];
-              const a = imgData[pixelIndex + 3];
+              const pixelIdx = (row * columns + column) * 4;
+              const r = imgData[pixelIdx];
+              const g = imgData[pixelIdx + 1];
+              const b = imgData[pixelIdx + 2];
+              const a = imgData[pixelIdx + 3];
               const brightness = (r + g + b) / 3;
-              const isShape = a > 50 && brightness < 220;
+              const isShape = a > 50 && brightness < 238;
 
               if (isShape) {
                 character = characterFromPixel(brightness, noise);
@@ -1092,19 +1057,14 @@
 
           const segments = [];
           let start = null;
-
-          for (let column = 0; column < columns; column++) {
-            if (gridRow[column] !== " ") {
-              if (start === null) start = column;
-            } else if (start !== null) {
-              segments.push({ start, end: column - 1, width: column - start });
-              start = null;
+          for (let col = 0; col < columns; col++) {
+            if (gridRow[col] !== " ") {
+              if (start === null) start = col;
+            } else {
+              if (start !== null) { segments.push({ start, end: col - 1, width: col - start }); start = null; }
             }
           }
-
-          if (start !== null) {
-            segments.push({ start, end: columns - 1, width: columns - start });
-          }
+          if (start !== null) segments.push({ start, end: columns - 1, width: columns - start });
 
           grid.push(gridRow);
           rowSegments.push(segments);
@@ -1113,7 +1073,7 @@
         return { grid, rowSegments, leftEdge };
       }
 
-            // --- Link placement ---
+      // --- Link placement ---
       function rectanglesOverlap(candidate, existingRectangles, gapRows) {
         return existingRectangles.some((rectangle) => {
           const separatedHorizontally = candidate.right < rectangle.left || candidate.left > rectangle.right;
@@ -1124,14 +1084,13 @@
 
       function placeLinks(rowSegments, columns, rows, leftEdge) {
         const linkSegments = [];
-        const placedRectangles = [];
 
         const layouts = {
-          balance: { row: 0.075, column: 0.28, offsets: [0, 6], maxWidth: 42, searchRows: 7, searchColumns: 14, coverageWeight: 1250 },
-          musica: { row: 0.18, column: 0.53, offsets: [0, 2], maxWidth: 24, searchRows: 7, searchColumns: 14, coverageWeight: 1250 },
-          semantic: { row: 0.40, column: 0.06, offsets: [0, 2], maxWidth: 22, searchRows: 8, searchColumns: 14, coverageWeight: 1250 },
-          cgis: { row: 0.56, column: 0.55, offsets: [0, 1, 2, 3], maxWidth: 19, searchRows: 9, searchColumns: 18, coverageWeight: 1450 },
-          media: { row: 0.75, column: 0.08, offsets: [0, 2], maxWidth: 22, searchRows: 8, searchColumns: 14, coverageWeight: 1250 }
+          balance: { row: 0.12, column: 0.57, offsets: [0, 2, 9], maxWidth: 14 },
+          musica: { row: 0.49, column: 0.06, offsets: [0, 4], maxWidth: 42 },
+          semantic: { row: 0.28, column: 0.32, offsets: [0, 2], maxWidth: 22 },
+          cgis: { row: 0.58, column: 0.5, offsets: [0, 1, 2, 3], maxWidth: 22 },
+          media: { row: 0.75, column: 0.06, offsets: [0, 2], maxWidth: 22 }
         };
 
         function getRange(offset, text) {
@@ -1189,87 +1148,6 @@
           return outputRows;
         }
 
-        function isInsideShape(row, column) {
-          if (row < 0 || row >= rows || column < 0 || column >= columns) {
-            return false;
-          }
-
-          return (rowSegments[row] || []).some((segment) => {
-            return column >= segment.start && column <= segment.end;
-          });
-        }
-
-        function rectanglesOverlapSoft(candidate, existingRectangles, gapRows) {
-          return existingRectangles.some((rectangle) => {
-            const separatedHorizontally = candidate.right < rectangle.left || candidate.left > rectangle.right;
-            const separatedVertically = candidate.bottom + gapRows < rectangle.top || candidate.top > rectangle.bottom + gapRows;
-            return !(separatedHorizontally || separatedVertically);
-          });
-        }
-
-        function scoreLinkBlock(outputRows, row, column, targetRow, targetColumn, layout) {
-          let coveredCharacters = 0;
-          let totalCharacters = 0;
-
-          outputRows.forEach((outputRow, rowOffset) => {
-            for (let i = 0; i < outputRow.text.length; i++) {
-              if (outputRow.text[i] === " ") continue;
-
-              totalCharacters++;
-              if (isInsideShape(row + rowOffset, column + outputRow.offset + i)) {
-                coveredCharacters++;
-              }
-            }
-          });
-
-          const coverage = totalCharacters ? coveredCharacters / totalCharacters : 0;
-          const rowDistance = Math.abs(row - targetRow);
-          const columnDistance = Math.abs(column - targetColumn);
-          const coverageWeight = layout.coverageWeight || 1200;
-
-          return (coverage * coverageWeight) - (rowDistance * 22) - (columnDistance * 2.2);
-        }
-
-        function findBestPlacement(outputRows, blockWidth, targetRow, targetColumn, layout, minimumGapRows) {
-          let bestPlacement = null;
-          const maxStartRow = Math.max(0, rows - outputRows.length);
-          const maxStartColumn = Math.max(0, columns - blockWidth - 1);
-          const searchRows = layout.searchRows || rows;
-          const searchColumns = layout.searchColumns || columns;
-          const rowStart = clamp(targetRow - searchRows, 0, maxStartRow);
-          const rowEnd = clamp(targetRow + searchRows, 0, maxStartRow);
-          const columnStart = clamp(targetColumn - searchColumns, 0, maxStartColumn);
-          const columnEnd = clamp(targetColumn + searchColumns, 0, maxStartColumn);
-
-          for (let row = rowStart; row <= rowEnd; row++) {
-            for (let column = columnStart; column <= columnEnd; column++) {
-              const rectangle = {
-                left: column,
-                right: column + blockWidth - 1,
-                top: row,
-                bottom: row + outputRows.length - 1
-              };
-
-              if (rectanglesOverlapSoft(rectangle, placedRectangles, minimumGapRows)) {
-                continue;
-              }
-
-              const score = scoreLinkBlock(outputRows, row, column, targetRow, targetColumn, layout);
-
-              if (!bestPlacement || score > bestPlacement.score) {
-                bestPlacement = {
-                  row,
-                  column,
-                  rectangle,
-                  score
-                };
-              }
-            }
-          }
-
-          return bestPlacement;
-        }
-
         getProjectGroups().forEach((group) => {
           const layout = layouts[group.project];
 
@@ -1279,17 +1157,13 @@
 
           const targetRow = clamp(Math.floor(rows * layout.row), 0, rows - 1);
           const targetColumn = clamp(Math.floor(columns * layout.column), 0, columns - 2);
-          const outputRows = buildRowsForGroup(group, layout, columns - 2);
+          const availableWidth = Math.max(6, columns - targetColumn - 1);
+          const outputRows = buildRowsForGroup(group, layout, availableWidth);
           const blockWidth = Math.max(...outputRows.map((row) => row.width), 1);
-          const minimumGapRows = Math.max(1, Math.floor(rows * 0.025));
-          const placement = findBestPlacement(outputRows, blockWidth, targetRow, targetColumn, layout, minimumGapRows);
-
-          if (!placement) {
-            return;
-          }
+          const baseColumn = clamp(targetColumn, 0, columns - blockWidth - 1);
 
           outputRows.forEach((outputRow, rowOffset) => {
-            const row = placement.row + rowOffset;
+            const row = targetRow + rowOffset;
 
             if (row < 0 || row >= rows) {
               return;
@@ -1297,19 +1171,18 @@
 
             linkSegments.push({
               row,
-              column: placement.column + outputRow.offset,
+              column: baseColumn + outputRow.offset,
               text: outputRow.text,
               href: outputRow.href,
               label: outputRow.label,
               project: outputRow.project
             });
           });
-
-          placedRectangles.push(placement.rectangle);
         });
 
         return linkSegments;
       }
+
       function placeUtilityLinks(columns, rows) {
         const utilitySegments = [];
         for (const util of utilityLinks) {
@@ -1387,16 +1260,16 @@
         <span class="fallback-label">Work:</span>
 
         <div class="fallback-project">
-          <a href="balance-of-power-videogame-propaganda-1980-2000.html" data-project="balance"
+          <a href="https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/" data-project="balance"
             aria-label="Balance of Power: Videogame Propaganda 1980-2000">Balance of Power:</a>
-          <a href="balance-of-power-videogame-propaganda-1980-2000.html" data-project="balance"
+          <a href="https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/" data-project="balance"
             aria-label="Balance of Power: Videogame Propaganda 1980-2000">Videogame Propaganda 1980-2000</a>
         </div>
 
         <div class="fallback-project">
-          <a href="musica-obscura-issue-001.html" data-project="musica"
+          <a href="https://jarviskearns.github.io/musica-obscura/" data-project="musica"
             aria-label="Musica Obscura issue 001">Musica Obscura</a>
-          <a href="musica-obscura-issue-001.html" data-project="musica"
+          <a href="https://jarviskearns.github.io/musica-obscura/" data-project="musica"
             aria-label="Musica Obscura issue 001">issue 001</a>
         </div>
 
@@ -1408,13 +1281,13 @@
         </div>
 
         <div class="fallback-project">
-          <a href="cgis-commons-geographic-image-search.html" data-project="cgis"
+          <a href="https://jarviskearns.github.io/web-collage/" data-project="cgis"
             aria-label="CGIS (commons-geographic-image-search)">CGIS</a>
-          <a href="cgis-commons-geographic-image-search.html" data-project="cgis"
+          <a href="https://jarviskearns.github.io/web-collage/" data-project="cgis"
             aria-label="CGIS (commons-geographic-image-search)">commons</a>
-          <a href="cgis-commons-geographic-image-search.html" data-project="cgis"
+          <a href="https://jarviskearns.github.io/web-collage/" data-project="cgis"
             aria-label="CGIS (commons-geographic-image-search)">geographic</a>
-          <a href="cgis-commons-geographic-image-search.html" data-project="cgis"
+          <a href="https://jarviskearns.github.io/web-collage/" data-project="cgis"
             aria-label="CGIS (commons-geographic-image-search)">image-search</a>
         </div>
 
@@ -1425,7 +1298,7 @@
             aria-label="assorted video and audio">video &amp; audio</a>
         </div>
 
-        <a href="mailto:hello@example.com" class="utility-link">contact</a>
+        <a href="mailto:jarviskearns10@gmail.com" class="utility-link">contact</a>
       </div>
     `;
         container.style.height = "auto";
@@ -1579,9 +1452,8 @@
         container.innerHTML = "";
         container.style.overflow = "hidden";
 
-        const { charHeight } = getCharacterSize(container);
-        const savedColumns = parseInt(container.dataset.targetAsciiColumns || "0", 10);
-        const columns = savedColumns > 0 ? savedColumns : getTargetAsciiColumns();
+        const { charWidth, charHeight } = getCharacterSize(container);
+        const columns = Math.floor(container.clientWidth / charWidth);
         const savedRows = parseInt(container.dataset.asciiRows || "0", 10);
         const rows = savedRows > 0 ? savedRows : Math.floor(container.clientHeight / charHeight);
 
@@ -1598,14 +1470,17 @@
         initCharacterCycling(preElement);
         initProjectGroupHover(preElement);
       }
-// --- Image loading ---
+
+      // --- Image loading ---
       templateImage.onload = () => {
         imageLoaded = true;
+        updateContainerSize();
         generateAsciiShape();
       };
 
       templateImage.onerror = () => {
         imageLoaded = false;
+        updateContainerSize();
         renderFallbackLinks();
       };
 
@@ -1622,8 +1497,11 @@
       }
 
       function updateContainerSize() {
+        const style = getComputedStyle(container);
+        const fontSize = parseFloat(style.fontSize);
+        const lineHeight = parseFloat(style.lineHeight) || fontSize * 1.05;
+
         if (!imageLoaded || templateImage.naturalWidth <= 0 || templateImage.naturalHeight <= 0) {
-          container.style.fontSize = "";
           delete container.dataset.asciiRows;
           delete container.dataset.targetAsciiColumns;
           container.style.height = "auto";
@@ -1632,16 +1510,14 @@
           return;
         }
 
-        const targetColumns = fitAsciiFontToColumnTarget();
-        const style = getComputedStyle(container);
-        const fontSize = parseFloat(style.fontSize);
-        const lineHeight = parseFloat(style.lineHeight) || fontSize * 1.05;
+        fitAsciiFontToColumnTarget();
+        const { charWidth, charHeight } = getCharacterSize(container);
         const imageRatio = templateImage.naturalHeight / templateImage.naturalWidth;
-        const idealRows = Math.max(14, Math.round(targetColumns * imageRatio));
+        const idealRows = Math.max(14, Math.round((container.clientWidth / charWidth) * imageRatio));
         const availableHeight = getAvailableAsciiHeight();
-        const maxRowsOnScreen = Math.max(14, Math.floor(availableHeight / lineHeight));
+        const maxRowsOnScreen = Math.max(14, Math.floor(availableHeight / charHeight));
         const fittedRows = Math.min(idealRows, maxRowsOnScreen);
-        const fittedHeight = Math.min(availableHeight, fittedRows * lineHeight);
+        const fittedHeight = Math.min(availableHeight, fittedRows * charHeight);
 
         container.dataset.asciiRows = String(fittedRows);
         container.style.height = fittedHeight + 'px';
@@ -1662,21 +1538,23 @@
       });
       resizeObserver.observe(container);
 
-      window.addEventListener('orientationchange', () => {
-        requestAnimationFrame(() => {
-          updateContainerSize();
-          generateAsciiShape();
-        });
-      });
-
       if (templateImage.complete) {
         if (templateImage.naturalWidth > 0) {
           imageLoaded = true;
+          updateContainerSize();
           generateAsciiShape();
         } else {
           imageLoaded = false;
+          updateContainerSize();
           renderFallbackLinks();
         }
+      } else {
+        setTimeout(() => {
+          if (!imageLoaded) {
+            updateContainerSize();
+            renderFallbackLinks();
+          }
+        }, 500);
       }
     })();
   </script>
