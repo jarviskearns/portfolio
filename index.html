@@ -28,7 +28,10 @@
       --hover-background: #0000ee;
       --hover-text: #ffffff;
       --line: #111111;
-      --work-divider-x: 294px;
+      --rail-width: 286px;
+      --title-height: 78px;
+      --panel-padding: 18px;
+      --main-gutter: 24px;
       --font: "OCR A Std", "OCR A Extended", "OCR-A", "Letter Gothic Std", "Share Tech Mono", "IBM Plex Mono", "Cascadia Mono", "Andale Mono", "Monaco", "Lucida Console", "DejaVu Sans Mono", "Noto Sans Mono", ui-monospace, monospace;
       --mobile-side-padding: 16px;
       --mobile-ascii-side-padding: 28px;
@@ -53,35 +56,6 @@
       overflow-x: auto;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: 30;
-      border: 1px solid var(--line);
-      pointer-events: none;
-    }
-
-    .site-screen-lines {
-      position: fixed;
-      inset: 0;
-      z-index: 18;
-      pointer-events: none;
-    }
-
-    .site-screen-line {
-      position: fixed;
-      display: block;
-      background: var(--line);
-      pointer-events: none;
-    }
-
-    .site-screen-line.is-work-divider {
-      left: var(--work-divider-x);
-      top: 0;
-      bottom: 0;
-      width: 1px;
-    }
 
     a {
       color: inherit;
@@ -90,37 +64,77 @@
 
     main {
       min-height: 100vh;
-      display: block;
-      padding: 48px 32px 48px 310px;
+      margin-left: var(--rail-width);
+      display: grid;
+      grid-template-rows: var(--title-height) minmax(0, 1fr);
+      overflow: hidden;
+      background: var(--background);
     }
 
     .site-banner {
+      position: relative;
       display: block;
       width: 100%;
-      font-family: "Jarvis Graphics Typeface", "OCR A Std", "OCR A Extended", "OCR-A", "Letter Gothic Std", "Share Tech Mono", "IBM Plex Mono", "Cascadia Mono", "Andale Mono", "Monaco", "Lucida Console", "DejaVu Sans Mono", "Noto Sans Mono", ui-monospace, monospace;
-      font-size: clamp(24px, 4vw, 56px);
-      font-weight: normal;
-      letter-spacing: -0.06em;
-      line-height: 1;
-      margin: 0;
-      padding: 0 0 12px 0;
-      border-bottom: 1px solid var(--line);
+      min-width: 0;
+      height: var(--title-height);
+      overflow: hidden;
+      padding: 0 var(--main-gutter);
       color: var(--text);
+      font-family: "Jarvis Graphics Typeface", "OCR A Std", "OCR A Extended", "OCR-A", "Letter Gothic Std", "Share Tech Mono", "IBM Plex Mono", "Cascadia Mono", "Andale Mono", "Monaco", "Lucida Console", "DejaVu Sans Mono", "Noto Sans Mono", ui-monospace, monospace;
+      font-size: clamp(30px, 4.8vw, 76px);
+      font-weight: normal;
+      letter-spacing: -0.07em;
+      line-height: var(--title-height);
+      text-align: justify;
+      text-align-last: justify;
+      text-transform: lowercase;
+      white-space: nowrap;
+    }
+
+    .site-banner::before {
+      /* Full title divider: runs from the rail divider to the right edge. */
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 1px;
+      background: var(--line);
+      pointer-events: none;
+    }
+
+    .site-banner::after {
+      content: "";
+      display: inline-block;
+      width: 100%;
     }
 
     .work-scroll {
       position: fixed;
-      left: 32px;
-      top: 48px;
-      bottom: 48px;
-      width: 250px;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 2;
+      width: var(--rail-width);
+      padding: var(--panel-padding);
       overflow-y: auto;
       overflow-x: hidden;
       overscroll-behavior: contain;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       background: var(--background);
-      border-right: 1px solid var(--line);
+    }
+
+    .work-scroll::after {
+      /* Full-height divider between the image rail and the main page. */
+      content: "";
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: calc(var(--rail-width) - 1px);
+      width: 1px;
+      background: var(--line);
+      pointer-events: none;
     }
 
     .work-scroll::-webkit-scrollbar {
@@ -215,14 +229,16 @@
     }
 
     .organic-ascii {
-      width: min(80vw, 980px);
-      max-width: 100%;
-      margin: 10vh 0 0 0;
+      align-self: center;
+      justify-self: center;
+      width: min(calc(100vw - var(--rail-width) - (var(--main-gutter) * 2)), 1020px);
+      max-width: calc(100% - (var(--main-gutter) * 2));
+      margin: 0;
       overflow: hidden;
       background: transparent;
       color: var(--text);
       font-family: var(--font);
-      font-size: clamp(9px, 1.1vw, 15px);
+      font-size: clamp(9px, 1.08vw, 15px);
       line-height: 1.05;
       letter-spacing: 0.015em;
     }
@@ -315,22 +331,34 @@
         overflow-x: hidden;
       }
 
-      .site-screen-line.is-work-divider {
-        display: none;
-      }
-
       main {
         width: 100%;
         min-height: 100svh;
-        padding: 178px var(--mobile-side-padding) 32px var(--mobile-side-padding);
+        margin-left: 0;
+        display: block;
+        padding: 140px 0 32px 0;
         overflow-x: hidden;
       }
 
       .site-banner {
         max-width: 100%;
+        height: auto;
+        min-height: 0;
+        padding: 14px var(--mobile-side-padding) 12px var(--mobile-side-padding);
         font-size: clamp(20px, 8vw, 36px);
         line-height: 0.94;
         letter-spacing: -0.075em;
+        text-align: left;
+        text-align-last: auto;
+      }
+
+      .site-banner::before {
+        left: 0;
+        right: 0;
+      }
+
+      .site-banner::after {
+        display: none;
       }
 
       .site-banner {
@@ -339,11 +367,6 @@
         white-space: nowrap;
       }
 
-
-      .site-banner {
-        padding-left: 0;
-        padding-right: 0;
-      }
 
 
       .work-scroll {
@@ -360,8 +383,12 @@
         overflow-y: hidden;
         background: var(--background);
         border-right: 0;
-        border-bottom: 1px solid var(--line);
+        border-bottom: 0;
         touch-action: pan-x;
+      }
+
+      .work-scroll::after {
+        display: none;
       }
 
       .work-track,
@@ -396,8 +423,9 @@
       }
 
       .organic-ascii {
-        width: 100%;
-        margin-top: 8vh;
+        width: calc(100% - (var(--mobile-side-padding) * 2));
+        max-width: calc(100% - (var(--mobile-side-padding) * 2));
+        margin: 8vh auto 0 auto;
         font-size: clamp(8.6px, 3.35vw, 14px);
         line-height: 1.02;
         letter-spacing: 0.045em;
@@ -409,7 +437,7 @@
 
     @media (max-width: 520px) {
       main {
-        padding: 158px var(--mobile-side-padding) 28px var(--mobile-side-padding);
+        padding: 122px 0 28px 0;
       }
 
       .work-scroll {
@@ -447,9 +475,6 @@
 </head>
 
 <body>
-  <div class="site-screen-lines" aria-hidden="true">
-    <span class="site-screen-line is-work-divider"></span>
-  </div>
   <main>
     <aside aria-label="Selected work images" class="work-scroll">
       <div class="work-track">
