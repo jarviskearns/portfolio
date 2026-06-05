@@ -5,6 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <link rel="preload" as="image" href="images/shape.png" fetchpriority="high" />
   <title>jarvis kearns graphics homepage</title>
   <style>
     @font-face {
@@ -29,9 +30,11 @@
       --hover-text: #ffffff;
       --line: #111111;
       --rail-width: 286px;
-      --title-height: 78px;
       --panel-padding: 18px;
       --main-gutter: 24px;
+      --title-padding-top: clamp(8px, 1.15vw, 15px);
+      --title-padding-bottom: clamp(8px, 1.15vw, 15px);
+      --ascii-top-gap: clamp(22px, 5vh, 64px);
       --font: "OCR A Std", "OCR A Extended", "OCR-A", "Letter Gothic Std", "Share Tech Mono", "IBM Plex Mono", "Cascadia Mono", "Andale Mono", "Monaco", "Lucida Console", "DejaVu Sans Mono", "Noto Sans Mono", ui-monospace, monospace;
       --mobile-side-padding: 16px;
       --mobile-ascii-side-padding: 28px;
@@ -66,7 +69,7 @@
       min-height: 100vh;
       margin-left: var(--rail-width);
       display: grid;
-      grid-template-rows: var(--title-height) minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
       overflow: hidden;
       background: var(--background);
     }
@@ -76,15 +79,15 @@
       display: block;
       width: 100%;
       min-width: 0;
-      height: var(--title-height);
+      height: auto;
       overflow: hidden;
-      padding: 0 var(--main-gutter);
+      padding: var(--title-padding-top) var(--main-gutter) var(--title-padding-bottom);
       color: var(--text);
       font-family: "Jarvis Graphics Typeface", "OCR A Std", "OCR A Extended", "OCR-A", "Letter Gothic Std", "Share Tech Mono", "IBM Plex Mono", "Cascadia Mono", "Andale Mono", "Monaco", "Lucida Console", "DejaVu Sans Mono", "Noto Sans Mono", ui-monospace, monospace;
       font-size: clamp(30px, 4.8vw, 76px);
       font-weight: normal;
       letter-spacing: -0.07em;
-      line-height: var(--title-height);
+      line-height: 0.88;
       text-align: justify;
       text-align-last: justify;
       text-transform: lowercase;
@@ -229,11 +232,12 @@
     }
 
     .organic-ascii {
-      align-self: center;
+      grid-row: 2;
+      align-self: start;
       justify-self: center;
       width: min(calc(100vw - var(--rail-width) - (var(--main-gutter) * 2)), 1020px);
       max-width: calc(100% - (var(--main-gutter) * 2));
-      margin: 0;
+      margin: var(--ascii-top-gap) 0 0 0;
       overflow: hidden;
       background: transparent;
       color: var(--text);
@@ -281,51 +285,6 @@
       color: #000000;
     }
 
-    .ascii-fallback {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.35em;
-      width: 100%;
-      padding-top: 0.5em;
-      font: inherit;
-      line-height: 1.05;
-      letter-spacing: 0.03em;
-    }
-
-    .ascii-fallback .fallback-label {
-      color: var(--text);
-      font-size: clamp(14px, 2vw, 24px);
-      line-height: 1;
-      margin-bottom: 0.2em;
-    }
-
-    .ascii-fallback .fallback-project {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.05em;
-      margin: 0 0 0.45em 0;
-    }
-
-    .ascii-fallback a {
-      color: var(--link);
-      background: transparent;
-      font: inherit;
-      font-size: clamp(17px, 2.4vw, 31px);
-      line-height: 1.03;
-      text-decoration: none;
-    }
-
-    .ascii-fallback a:hover,
-    .ascii-fallback a:focus-visible,
-    .ascii-fallback a.is-active {
-      background: var(--hover-background);
-      color: var(--hover-text);
-      outline: none;
-      text-decoration: none;
-    }
-
     @media (max-width: 900px) {
       body {
         overflow-x: hidden;
@@ -344,7 +303,7 @@
         max-width: 100%;
         height: auto;
         min-height: 0;
-        padding: 14px var(--mobile-side-padding) 12px var(--mobile-side-padding);
+        padding: 10px var(--mobile-side-padding) 10px var(--mobile-side-padding);
         font-size: clamp(20px, 8vw, 36px);
         line-height: 0.94;
         letter-spacing: -0.075em;
@@ -425,7 +384,7 @@
       .organic-ascii {
         width: calc(100% - (var(--mobile-side-padding) * 2));
         max-width: calc(100% - (var(--mobile-side-padding) * 2));
-        margin: 8vh auto 0 auto;
+        margin: clamp(22px, 6vh, 50px) auto 0 auto;
         font-size: clamp(8.6px, 3.35vw, 14px);
         line-height: 1.02;
         letter-spacing: 0.045em;
@@ -460,7 +419,7 @@
       }
 
       .organic-ascii {
-        margin-top: 6vh;
+        margin-top: clamp(18px, 5vh, 42px);
         font-size: clamp(4.8px, 1.33vw, 6.7px);
         line-height: 1;
       }
@@ -578,51 +537,7 @@
     </aside>
     <h1 class="site-banner">jarvis kearns graphics homepage</h1>
     <nav class="organic-ascii" id="organicAscii" aria-label="Main links">
-      <!-- ascii-generator-source: images/shape.png only; fallback: simple link rows -->
-      <div class="ascii-fallback" data-fallback>
-        <span class="fallback-label">Work:</span>
-
-        <div class="fallback-project">
-          <a href="https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/" data-project="balance"
-            aria-label="Balance of Power: Videogame Propaganda 1980-2000">Balance of Power:</a>
-          <a href="https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/" data-project="balance"
-            aria-label="Balance of Power: Videogame Propaganda 1980-2000">Videogame Propaganda 1980-2000</a>
-        </div>
-
-        <div class="fallback-project">
-          <a href="https://jarviskearns.github.io/musica-obscura/" data-project="musica"
-            aria-label="Musica Obscura issue 001">Musica
-            Obscura</a>
-          <a href="https://jarviskearns.github.io/musica-obscura/" data-project="musica"
-            aria-label="Musica Obscura issue 001">issue
-            001</a>
-        </div>
-
-        <div class="fallback-project">
-          <a href="https://jarviskearns.github.io/web-collage/" data-project="semantic" aria-label="semantic web collager">semantic</a>
-          <a href="https://jarviskearns.github.io/web-collage/" data-project="semantic" aria-label="semantic web collager">web
-            collager</a>
-        </div>
-
-        <div class="fallback-project">
-          <a href="https://jarviskearns.github.io/web-collage/" data-project="cgis"
-            aria-label="CGIS (commons-geographic-image-search)">CGIS</a>
-          <a href="https://jarviskearns.github.io/web-collage/" data-project="cgis"
-            aria-label="CGIS (commons-geographic-image-search)">commons</a>
-          <a href="https://jarviskearns.github.io/web-collage/" data-project="cgis"
-            aria-label="CGIS (commons-geographic-image-search)">geographic</a>
-          <a href="https://jarviskearns.github.io/web-collage/" data-project="cgis"
-            aria-label="CGIS (commons-geographic-image-search)">image-search</a>
-        </div>
-
-        <div class="fallback-project">
-          <a href="assorted-video-audio.html" data-project="media" aria-label="assorted video and audio">assorted</a>
-          <a href="assorted-video-audio.html" data-project="media" aria-label="assorted video and audio">video &amp;
-            audio</a>
-        </div>
-
-        <a href="mailto:jarviskearns10@gmail.com" class="utility-link">contact</a>
-      </div>
+      <!-- ascii-generator-source: images/shape.png only -->
     </nav>
   </main>
   <div class="image-lightbox" id="imageLightbox" aria-hidden="true">
@@ -1116,6 +1031,10 @@
       // --- Shape generation ---
       let imageLoaded = false;
       const templateImage = new Image();
+      templateImage.decoding = "async";
+      if ("fetchPriority" in templateImage) {
+        templateImage.fetchPriority = "high";
+      }
 
       function createShape(columns, rows) {
         const grid = [];
@@ -1350,63 +1269,6 @@
 
         return pre;
       }
-      function renderFallbackLinks() {
-        if (cleanupCycling) {
-          cleanupCycling();
-          cleanupCycling = null;
-        }
-
-        container.innerHTML = `
-      <div class="ascii-fallback" data-fallback>
-        <span class="fallback-label">Work:</span>
-
-        <div class="fallback-project">
-          <a href="https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/" data-project="balance"
-            aria-label="Balance of Power: Videogame Propaganda 1980-2000">Balance of Power:</a>
-          <a href="https://jarviskearns.github.io/Balance-of-power-Videogame-propaganda-archive/" data-project="balance"
-            aria-label="Balance of Power: Videogame Propaganda 1980-2000">Videogame Propaganda 1980-2000</a>
-        </div>
-
-        <div class="fallback-project">
-          <a href="https://jarviskearns.github.io/musica-obscura/" data-project="musica"
-            aria-label="Musica Obscura issue 001">Musica Obscura</a>
-          <a href="https://jarviskearns.github.io/musica-obscura/" data-project="musica"
-            aria-label="Musica Obscura issue 001">issue 001</a>
-        </div>
-
-        <div class="fallback-project">
-          <a href="https://jarviskearns.github.io/web-collage/" data-project="semantic"
-            aria-label="semantic web collager">semantic</a>
-          <a href="https://jarviskearns.github.io/web-collage/" data-project="semantic"
-            aria-label="semantic web collager">web collager</a>
-        </div>
-
-        <div class="fallback-project">
-          <a href="https://jarviskearns.github.io/web-collage/" data-project="cgis"
-            aria-label="CGIS (commons-geographic-image-search)">CGIS</a>
-          <a href="https://jarviskearns.github.io/web-collage/" data-project="cgis"
-            aria-label="CGIS (commons-geographic-image-search)">commons</a>
-          <a href="https://jarviskearns.github.io/web-collage/" data-project="cgis"
-            aria-label="CGIS (commons-geographic-image-search)">geographic</a>
-          <a href="https://jarviskearns.github.io/web-collage/" data-project="cgis"
-            aria-label="CGIS (commons-geographic-image-search)">image-search</a>
-        </div>
-
-        <div class="fallback-project">
-          <a href="assorted-video-audio.html" data-project="media"
-            aria-label="assorted video and audio">assorted</a>
-          <a href="assorted-video-audio.html" data-project="media"
-            aria-label="assorted video and audio">video &amp; audio</a>
-        </div>
-
-        <a href="mailto:jarviskearns10@gmail.com" class="utility-link">contact</a>
-      </div>
-    `;
-        container.style.height = "auto";
-        container.style.overflow = "visible";
-        initProjectGroupHover(container);
-      }
-
       // --- Character cycling ---
       let cleanupCycling = null;
 
@@ -1545,7 +1407,7 @@
       // --- Main generation ---
       function generateAsciiShape() {
         if (!imageLoaded || templateImage.naturalWidth <= 0 || templateImage.naturalHeight <= 0) {
-          renderFallbackLinks();
+          container.innerHTML = "";
           return;
         }
 
@@ -1559,7 +1421,7 @@
         const rows = savedRows > 0 ? savedRows : Math.floor(container.clientHeight / charHeight);
 
         if (columns < 20 || rows < 14) {
-          renderFallbackLinks();
+          container.innerHTML = "";
           return;
         }
 
@@ -1582,7 +1444,7 @@
       templateImage.onerror = () => {
         imageLoaded = false;
         updateContainerSize();
-        renderFallbackLinks();
+        container.innerHTML = "";
       };
 
       templateImage.src = "images/shape.png";
@@ -1633,7 +1495,7 @@
       }
 
       updateContainerSize();
-      renderFallbackLinks();
+      container.innerHTML = "";
 
       let resizeFrame = null;
       let lastAsciiLayoutWidth = Math.round(container.getBoundingClientRect().width);
@@ -1676,15 +1538,8 @@
         } else {
           imageLoaded = false;
           updateContainerSize();
-          renderFallbackLinks();
+          container.innerHTML = "";
         }
-      } else {
-        setTimeout(() => {
-          if (!imageLoaded) {
-            updateContainerSize();
-            renderFallbackLinks();
-          }
-        }, 500);
       }
     })();
   </script>
